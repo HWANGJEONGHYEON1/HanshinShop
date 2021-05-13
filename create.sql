@@ -18,16 +18,19 @@ CREATE TABLE `Order`(
 /* Table Name: User */
 /**********************************/
 CREATE TABLE User(
-                     id INT AUTO_INCREMENT primary key,
+                     id INT AUTO_INCREMENT,
                      account VARCHAR(100) NOT NULL,
                      name VARCHAR(100) NOT NULL,
-                     pwd VARCHAR(100) NOT NULL,
+                     password VARCHAR(100) NOT NULL,
                      tel VARCHAR(100),
                      addr VARCHAR(100),
                      email VARCHAR(100),
                      birth VARCHAR(100),
-                     join_date TIMESTAMP DEFAULT now()
+                     join_date TIMESTAMP DEFAULT now(),
+                     primary key (id, email)
 );
+
+alter table user change pwd password varchar(100);
 
 /**********************************/
 /* Table Name: OrdersGoods */
@@ -101,6 +104,12 @@ CREATE TABLE GoodsImg(
                          file_name VARCHAR(100)
 );
 
+create table user_role (
+                           email VARCHAR(100),
+                           role_name VARCHAR(50)
+);
+
+ALTER TABLE user_role ADD CONSTRAINT IDX_Role UNIQUE (email, role_name);
 
 ALTER TABLE User ADD CONSTRAINT IDX_User_account UNIQUE (account);
 ALTER TABLE User ADD CONSTRAINT IDX_User_email UNIQUE (email);
