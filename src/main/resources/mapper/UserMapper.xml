@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanshin.shop.repository.UserMapper"><!--namespace를 통해 UserDAO와 연결합니다. -->
+    <resultMap id="userMap" type="com.hanshin.shop.entity.User">
+        <id property="id" column="id" />
+        <id property="password" column="password" />
+        <id property="name" column="name" />
+        <id property="tel" column="tel" />
+        <id property="account" column="account" />
+        <id property="addr" column="addr" />
+        <id property="email" column="email" />
+        <id property="birth" column="birth" />
+        <collection property="userRoles" resultMap="userRoleMap"></collection>
+    </resultMap>
+
+    <resultMap id="userRoleMap" type="com.hanshin.shop.entity.UserRole">
+        <result property="email" column="email" />
+        <result property="role" column="role" />
+    </resultMap>
+
+    <select id="findByEmail" resultMap="userMap">
+        select id, account, name, password, tel, addr, u.email, birth, r.role
+        from user u left join user_role r on u.email = r.email
+        where u.email = #{email}
+    </select>
+
+    <select id="findById" resultType="com.hanshin.shop.entity.User">
+        SELECT id, password, name, tel, account, addr, email, birth
+        FROM user
+        WHERE id = #{id}
+    </select>
+
+    <select id="isExistEmail" resultType="int" parameterType="String">
+        select COUNT(id)
+        from user
+        where email = #{email}
+    </select>
+
+    <insert id="signUp" >
+        insert into user (password, name, tel, addr, email, birth, account)
+        values( #{password}, #{name}, #{tel}, #{addr}, #{email}, #{birth}, #{account})
+    </insert>
+
+    <insert id="registerRole">
+        insert into user_role(email, role) values(#{email}, #{role});
+    </insert>
+
+</mapper>
