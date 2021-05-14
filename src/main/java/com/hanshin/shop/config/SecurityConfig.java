@@ -41,8 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers(
-                        "/Source/**", "/sass/**", "/css/**", "/fonts/**", "/images/**", "/js/**", "/favicon.ico", "/img/**"
+                        "/Source/**",
+                        "/sass/**",
+                        "/css/**",
+                        "/fonts/**",
+                        "/images/**",
+                        "/js/**",
+                        "*/js/**",
+                        "/favicon.ico",
+                        "/img/**",
+                        "/resources/**"
                 );
+////        web.ignoring().antMatchers("/resources/**").anyRequest();
     }
 
     @Override
@@ -61,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
+                .antMatchers("/resources/**").permitAll()
                 .antMatchers("/api/**","/", "/login", "/signup", "/api/authenticate", "/api/signup", "/shop/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
