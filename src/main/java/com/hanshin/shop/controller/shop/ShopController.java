@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/shop")
 public class ShopController {
 
-    @GetMapping("/shop")
+    @GetMapping("/")
     public String shop() {
         return "shop/shop-grid";
     }
