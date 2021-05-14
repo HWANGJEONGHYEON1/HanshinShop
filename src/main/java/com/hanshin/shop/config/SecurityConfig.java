@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/fonts/**",
                         "/images/**",
                         "/js/**",
-                        "*/js/**",
+                        "*/js/**",jquery-ui.min
                         "/favicon.ico",
                         "/img/**",
                         "/resources/**"
