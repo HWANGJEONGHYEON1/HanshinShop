@@ -1,11 +1,11 @@
 package com.hanshin.shop.controller.user;
 
 import com.hanshin.shop.config.jwt.JwtFilter;
-import com.hanshin.shop.dto.UserDto;
+import com.hanshin.shop.controller.user.dto.UserDto;
 import com.hanshin.shop.entity.User;
 import com.hanshin.shop.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
-@Log
+@Slf4j
 @RequestMapping("/api")
 public class UserController {
 
@@ -26,14 +26,14 @@ public class UserController {
     public ResponseEntity<User> signUp(@Validated @RequestBody UserDto userDto) {
         log.info("회원가입 " + userDto);
 
-        return ResponseEntity.ok(userService.signUp(userDto).get());
+        return ResponseEntity.ok(userService.signUp(userDto));
     }
 
     @GetMapping("/user/{username}")
     @PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
     public ResponseEntity<User> getMyUserInfo(@PathVariable String username) {
 
-        return ResponseEntity.ok(userService.getUserInfo(username).get());
+        return ResponseEntity.ok(userService.getUserInfo(username));
     }
 
     @GetMapping("/user")
@@ -54,7 +54,6 @@ public class UserController {
         cookie.setPath("/");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-
     }
 
 
