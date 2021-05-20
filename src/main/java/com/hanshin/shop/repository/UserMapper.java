@@ -1,6 +1,6 @@
 package com.hanshin.shop.repository;
 
-import com.hanshin.shop.dto.UserDto;
+import com.hanshin.shop.controller.user.dto.UserDto;
 import com.hanshin.shop.entity.User;
 import com.hanshin.shop.entity.UserRole;
 import org.apache.ibatis.annotations.Mapper;

@@ -1,6 +1,6 @@
 package com.hanshin.shop.service;
 
-import com.hanshin.shop.dto.UserDto;
+import com.hanshin.shop.controller.user.dto.UserDto;
 import com.hanshin.shop.entity.User;
 import com.hanshin.shop.repository.UserMapper;
 import com.hanshin.shop.entity.RoleType;
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,13 +20,10 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public boolean isExist(String email) {
-        if (mapper.isExistEmail(email) >= 1) {
-            return true;
-        }
-        return false;
+        return mapper.isExistEmail(email) >= 1;
     }
 
-    public Optional<User> signUp(UserDto user) {
+    public User signUp(UserDto user) {
         if (isExist(user.getEmail())) {
             throw new RuntimeException("이미 가입되어있는 유저입니다.");
         }
@@ -49,7 +46,7 @@ public class UserService {
             return getUserInfo(user.getEmail());
         }
 
-        return Optional.empty();
+        throw new RuntimeException("관리자에게 문의하세요.");
     }
 
     private void saveUserRole(UserDto user) {
@@ -59,7 +56,7 @@ public class UserService {
         mapper.registerRole(role);
     }
 
-    public Optional<User> getUserInfo(String username) {
-        return mapper.findByEmail(username);
+    public User getUserInfo(String username) {
+        return mapper.findByEmail(username).get();
     }
 }

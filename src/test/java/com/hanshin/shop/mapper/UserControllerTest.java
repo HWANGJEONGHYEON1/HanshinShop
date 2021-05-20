@@ -1,9 +1,8 @@
 package com.hanshin.shop.mapper;
 
 import com.hanshin.shop.controller.user.UserController;
-import com.hanshin.shop.dto.UserDto;
+import com.hanshin.shop.controller.user.dto.UserDto;
 import com.hanshin.shop.entity.RoleType;
-import com.hanshin.shop.entity.User;
 import com.hanshin.shop.entity.UserRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

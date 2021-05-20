@@ -1,4 +1,4 @@
-package com.hanshin.shop.dto;
+package com.hanshin.shop.controller.user.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
