@@ -2,8 +2,8 @@ package com.hanshin.shop.controller.user;
 
 import com.hanshin.shop.config.jwt.JwtFilter;
 import com.hanshin.shop.config.jwt.TokenProvider;
-import com.hanshin.shop.dto.LoginDto;
-import com.hanshin.shop.dto.TokenDto;
+import com.hanshin.shop.controller.user.dto.LoginDto;
+import com.hanshin.shop.controller.user.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Arrays;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,10 +43,7 @@ public class AuthController {
         cookie.setPath("/");
         response.addCookie(cookie);
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new TokenDto(jwt), HttpStatus.OK);
     }
 
 }
