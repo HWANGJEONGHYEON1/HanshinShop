@@ -36,17 +36,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserInfo(username));
     }
 
-    @GetMapping("/user")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<String> getAnotherUserInfo() {
-        return ResponseEntity.ok("useradmin");
-    }
-
     @GetMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
         eraseCookie(request, response);
 
-        return ResponseEntity.ok("logout");
+        return (ResponseEntity<Void>) ResponseEntity.ok();
     }
 
     private void eraseCookie(HttpServletRequest request, HttpServletResponse response) {
