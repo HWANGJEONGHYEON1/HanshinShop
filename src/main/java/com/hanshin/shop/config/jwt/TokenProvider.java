@@ -29,17 +29,14 @@ import java.util.stream.Collectors;
 public class TokenProvider implements InitializingBean {
 
     private static final String AUTHORITIES_KEY = "auth";
-
+    private static final int ONE_HOUR = 1;
     private final String secret;
-    private final long tokenValidityInMilliseconds;
 
     private Key key;
 
     public TokenProvider(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+            @Value("${jwt.secret}") String secret) {
         this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
     }
 
     // Bean이 생성이되고 DI 후에 Secret 값을 decode해서 key 변수에 할당하기 위해 오버라이드함.
@@ -54,7 +51,7 @@ public class TokenProvider implements InitializingBean {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        final Timestamp validTimestamp = Timestamp.valueOf(LocalDateTime.now().plusHours(1));
+        final Timestamp validTimestamp = Timestamp.valueOf(LocalDateTime.now().plusHours(ONE_HOUR));
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
