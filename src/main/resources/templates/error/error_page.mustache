@@ -3,14 +3,16 @@
     <title>Title</title>
 </head>
 <body>
-<h4 style="color: aquamarine">
-
+<h3 style="color: darkslateblue">
+{{#exception}}
     <bold>{{exception.getMessage}}</bold>
-</h4>
+{{/exception}}
+{{^exception}}
+    <bold>ERROR PAGE</bold>
+{{/exception}}
+</h3>
 <ul>
-    <c:forEach items="${exception.getStackTrace() }" var="stack">
-        <li><c:out value="${stack}" /></li>
-    </c:forEach>
+
 </ul>
 </body>
 </html>
