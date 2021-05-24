@@ -16,14 +16,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -56,15 +54,13 @@ public class TokenProvider implements InitializingBean {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-//        Date validity = Date.from(Instant.from(LocalDateTime.now().plus(this.tokenValidityInMilliseconds, ChronoUnit.MILLIS))); // 에러 unable to obtain instant from temporalaccessor localdate
-        final Instant localInstance = LocalDateTime.now().plus(this.tokenValidityInMilliseconds, ChronoUnit.MILLIS).atZone(ZoneId.of("Asia/Seoul")).toInstant();
-        Date validity = Date.from(localInstance);
+        final Timestamp validTimestamp = Timestamp.valueOf(LocalDateTime.now().plusHours(1));
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS512)
-                .setExpiration(validity)
+                .setExpiration(validTimestamp)
                 .compact();
     }
 
@@ -76,7 +72,7 @@ public class TokenProvider implements InitializingBean {
                 .parseClaimsJws(token)
                 .getBody();
 
-        Collection<? extends GrantedAuthority> authorities =
+        List<GrantedAuthority> authorities =
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
@@ -90,13 +86,8 @@ public class TokenProvider implements InitializingBean {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-        } catch (ExpiredJwtException e) {
-
-        } catch (UnsupportedJwtException e) {
-
-        } catch (IllegalArgumentException e) {
-
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
         return false;
     }
