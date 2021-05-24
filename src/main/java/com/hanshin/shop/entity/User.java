@@ -1,5 +1,6 @@
 package com.hanshin.shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class User {
 
     private String account;
 
+    @JsonIgnore
     private String password;
 
     private String tel;
