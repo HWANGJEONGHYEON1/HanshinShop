@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,5 +26,10 @@ public class IndexController {
         }
 
         return "index";
+    }
+
+    @GetMapping("/a")
+    public String a() {
+        throw new IllegalStateException("부정확한 URL입니다.");
     }
 }

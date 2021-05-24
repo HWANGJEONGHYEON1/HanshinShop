@@ -30,4 +30,5 @@ public class UserControllerTest {
                 .build();
         controller.signUp(user);
     }
+
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 @Mapper
 public interface UserMapper {
 
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 
     int isExistEmail(String email);
 

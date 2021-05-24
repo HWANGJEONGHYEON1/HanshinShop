@@ -27,26 +27,23 @@ public class UserService {
         if (isExist(user.getEmail())) {
             throw new RuntimeException("이미 가입되어있는 유저입니다.");
         }
-
         saveUserRole(user);
-        int signUpCount = mapper.signUp(
-                UserDto.builder()
-                        .email(user.getEmail())
-                        .password(bCryptPasswordEncoder.encode(user.getPassword()))
-                        .name(user.getName())
-                        .addr(user.getAddr())
-                        .account(user.getAccount())
-                        .birth(user.getBirth())
-                        .tel(user.getTel())
-                        .userRoles(user.getUserRoles())
-                        .build()
-        );
+        mapper.signUp(saveUser(user));
 
-        if (signUpCount == 1) {
-            return getUserInfo(user.getEmail());
-        }
+        return getUserInfo(user.getEmail());
+    }
 
-        throw new RuntimeException("관리자에게 문의하세요.");
+    private UserDto saveUser(UserDto user) {
+        return UserDto.builder()
+                .email(user.getEmail())
+                .password(bCryptPasswordEncoder.encode(user.getPassword()))
+                .name(user.getName())
+                .addr(user.getAddr())
+                .account(user.getAccount())
+                .birth(user.getBirth())
+                .tel(user.getTel())
+                .userRoles(user.getUserRoles())
+                .build();
     }
 
     private void saveUserRole(UserDto user) {
@@ -57,6 +54,6 @@ public class UserService {
     }
 
     public User getUserInfo(String username) {
-        return mapper.findByEmail(username).get();
+        return mapper.findByEmail(username);
     }
 }

@@ -4,6 +4,7 @@ import com.hanshin.shop.entity.RoleType;
 import com.hanshin.shop.entity.User;
 import com.hanshin.shop.repository.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,10 +28,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        return userMapper.findByEmail(username)
-                .map(user -> createUser(user))
-                .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
+        final User user = userMapper.findByEmail(username);
+        if (Objects.isNull(user)) {
+            throw new UsernameNotFoundException(String.format("%s -> 데이터베이스에서 찾을 수 없습니다.", username));
+        }
+        return createUser(user);
     }
 
     private org.springframework.security.core.userdetails.User createUser(User user) {

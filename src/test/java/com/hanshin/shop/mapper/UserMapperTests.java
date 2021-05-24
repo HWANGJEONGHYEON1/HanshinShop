@@ -18,7 +18,7 @@ public class UserMapperTests {
     @DisplayName("이메일을 통해 유저 정보 잘 가져오는지")
     void userInfoTest() {
         System.out.println(mapper.findByEmail("test1@gmail.com"));
-        assertThat(mapper.findByEmail("test1@gmail.com").get().getId()).isEqualTo(4);
+        assertThat(mapper.findByEmail("test1@gmail.com").getId()).isEqualTo(4);
     }
 
     @Test
