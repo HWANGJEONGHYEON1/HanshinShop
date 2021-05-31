@@ -17,8 +17,8 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/shop")
-public class ShopController {
+@RequestMapping("/goods")
+public class GoodsController {
 
     private final GoodsService goodsService;
     private final GoodsAttachMapper attachMapper;
@@ -31,7 +31,7 @@ public class ShopController {
 
     @GetMapping("/new")
     public String registerForm() {
-        return "shop/createProduct";
+        return "goods/createProduct";
     }
 
     @PostMapping("/new")

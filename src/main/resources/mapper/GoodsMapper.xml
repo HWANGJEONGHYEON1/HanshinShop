@@ -6,20 +6,55 @@
     <resultMap id="goodsMap" type="com.hanshin.shop.entity.Goods">
         <id property="id" column="id" />
         <id property="name" column="name" />
+        <id property="categoryId" column="category_id" />
+        <id property="price" column="price" />
         <id property="description" column="description" />
         <id property="reviewCount" column="review_count" />
         <id property="discountRate" column="discount_rate" />
         <id property="regDate" column="reg_date" />
+        <collection property="attachList" resultMap="attachMap"></collection>
     </resultMap>
 
-    <insert id="save">
-        insert into goods (name, price, description)
-        values( #{name}, #{price}, #{description})
+    <resultMap id="attachMap" type="com.hanshin.shop.entity.GoodsAttachVO">
+        <result property="uuid" column="uuid" />
+        <result property="uploadPath" column="upload_path" />
+        <result property="fileName" column="file_name" />
+        <result property="goodsId" column="goods_id" />
+    </resultMap>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into goods (name, price, description, category_id)
+        values( #{name}, #{price}, #{description}, #{categoryId})
     </insert>
 
     <select id="findOne" resultType="com.hanshin.shop.entity.Goods">
+        <include refid="all"></include>
+        where goods.id = #{id}
+    </select>
+
+    <select id="findAll" resultType="com.hanshin.shop.entity.Goods">
         select id, name, price, description, review_count, discount_rate, reg_date
         from goods
-        where id = #{id}
     </select>
+
+    <select id="findAllList" resultMap="goodsMap">
+        <include refid="all" />
+
+    </select>
+
+    <select id="findListOfCategory" resultMap="goodsMap">
+        <include refid="all" />
+        <if test="categoryId > 0">
+            where category_id = #{categoryId}
+        </if>
+    </select>
+
+    <sql id="all">
+        select goods.id, goods.name, goods.description, goods.category_id, goods.price, attach.uuid, attach.upload_path, attach.file_name
+        from goods goods
+                 join attach attach
+                      on goods.id = attach.goods_id
+                 join category category
+                      on goods.category_id = category.id
+    </sql>
 </mapper>
