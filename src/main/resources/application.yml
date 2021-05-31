@@ -1,0 +1,35 @@
+spring:
+  datasource:
+      url: jdbc:log4jdbc:mysql://localhost:3306/kurly?serverTimezone=UTC&characterEncoding=UTF-8
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      username: hwang
+      password: 123
+      hikari:
+        connection-timeout: 5000
+        validation-timeout: 1000
+        maximum-pool-size: 30
+        minimum-idle: 2
+        connection-test-query: SELECT 1
+
+  jackson:
+    default-property-inclusion: non_null
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+  devtools:
+    restart:
+      enabled: true
+
+jwt:
+  header: Authorization
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+
+logging:
+  level:
+    jdbc.sqlonly: DEBUG ## 이부분 추가.
+    org.springframework.web: DEBUG
+    com.zaxxer.hikari.HikariDataSource: ERROR
