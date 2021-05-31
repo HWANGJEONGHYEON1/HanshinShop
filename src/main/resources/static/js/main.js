@@ -221,4 +221,107 @@
         $button.parent().find('input').val(newVal);
     });
 
+    initCategory();
+    initMainShop();
+    initMainRecommend();
+
+    $("#categories").on("click", "li", function(){
+        let id = $(this).attr("id");
+        $.ajax({
+            url: "/goods/category/" + id,
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                makeMainShopDiv(result);
+            }
+        });
+    });
+
+    let getPath = (goodsAttach) => {
+        let path = "/img/" + goodsAttach.uploadPath + "/" + goodsAttach.uuid + "_" + goodsAttach.fileName;
+        return path;
+    }
+
+    function initCategory() {
+        $.ajax({
+            url: '/goods/categories',
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                let categoryArray = [];
+                for (let categories in result) {
+                    let category = result[categories];
+                    categoryArray.push(`<li id="${category.id}">${category.name}</li>`);
+                }
+                $("#categories").append(categoryArray);
+            }
+        });
+    }
+
+    function initMainShop() {
+        $.ajax({
+            url: '/goods/main',
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                makeMainShopDiv(result);
+            }
+        });
+    }
+
+    function initMainRecommend() {
+        $.ajax({
+            url: '/goods/recommend',
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                let shopRecommendArray = [];
+                shopRecommendArray.push(`<div class="categories__slider owl-carousel">`)
+                for (let recommend in result) {
+                    let recommends = result[recommend];
+                    let path = getPath(recommends.attachList[0]);
+                    let detailUrl = "/goods-detail/" + recommends.id;
+                    shopRecommendArray.push(`
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="${path}">
+                            <img src="${path}" />
+                            <h5><a href="${detailUrl}">[추천] ${recommends.name}</a></h5>
+                        </div>
+                    </div>
+                `);
+                }
+                shopRecommendArray.push(`</div>`);
+                $("#shopRecommend").append(shopRecommendArray);
+            }
+        });
+    }
+
+    function makeMainShopDiv(result) {
+        let shopArray = [];
+        for (let shop in result) {
+            let goods = result[shop];
+            let path = getPath(goods.attachList[0]);
+            let detailUrl = "/goods-detail/" + goods.id;
+            shopArray.push(`
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix ${goods.categoryId}">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="${path}">
+                            <img src="${path}" />
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="${detailUrl}">${goods.name}</a></h6>
+                            <h5>${goods.price}</h5>
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+        $("#shopMain").empty();
+        $("#shopMain").append(shopArray);
+    }
 })(jQuery);
