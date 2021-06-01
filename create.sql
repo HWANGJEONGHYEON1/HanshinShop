@@ -111,6 +111,14 @@ create table user_role (
 
 ALTER TABLE user_role ADD CONSTRAINT IDX_Role UNIQUE (email, role_name);
 
+create table attach(
+	uuid varchar(100) not null,
+    upload_path varchar(100) not null,
+    fileName varchar(100) not null,
+    goods_id int
+);
+
+
 ALTER TABLE User ADD CONSTRAINT IDX_User_account UNIQUE (account);
 ALTER TABLE User ADD CONSTRAINT IDX_User_email UNIQUE (email);
 
@@ -123,3 +131,9 @@ ALTER TABLE Category ADD CONSTRAINT IDX_Category_PK PRIMARY KEY (id);
 ALTER TABLE Review ADD CONSTRAINT IDX_Review_PK PRIMARY KEY (id);
 
 ALTER TABLE GoodsImg ADD CONSTRAINT IDX_GoodsImg_PK PRIMARY KEY (id);
+
+ALTER TABLE attach ADD CONSTRAINT IDX_Attach_PK PRIMARY KEY (uuid);
+
+alter table attach change fileName file_name varchar(100);
+
+alter table category drop column goods_id;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanshin.shop.repository.GoodsAttachMapper">
+
+    <insert id="insert">
+        insert into attach(uuid, upload_path, file_name, goods_id)
+        values( #{uuid}, #{uploadPath}, #{fileName}, #{goodsId})
+    </insert>
+
+    <delete id="delete">
+        delete from attach where uuid = #{uuid}
+    </delete>
+
+    <select id="findByGoodsId" resultType="com.hanshin.shop.entity.GoodsAttachVO">
+        select * from attach where goods_id = #{id}
+    </select>
+
+    <delete id="deleteAll">
+        delete attach where goods_id = #{goods_id}
+    </delete>
+
+    <select id="getOldFiles" resultType="com.hanshin.shop.entity.GoodsAttachVO">
+        select * from attach where upload_path = to_char(sysdate - 1,'yyyy/mm/dd')
+    </select>
+</mapper>

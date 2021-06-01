@@ -39,42 +39,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
-                .ignoring()
-                .antMatchers(
-                        "/Source/**",
-                        "/sass/**",
-                        "/css/**",
-                        "/fonts/**",
-                        "/images/**",
-                        "/js/**",
-                        "/favicon.ico",
-                        "/img/**",
-                        "/resources/**"
-                );
+            .ignoring()
+            .antMatchers(
+                    "/Source/**",
+                    "/sass/**",
+                    "/css/**",
+                    "/fonts/**",
+                    "/images/**",
+                    "/js/**",
+                    "/favicon.ico",
+                    "/img/**",
+                    "/resources/**"
+            );
 ////        web.ignoring().antMatchers("/resources/**").anyRequest();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+            .csrf().disable()
+            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
 
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .accessDeniedHandler(jwtAccessDeniedHandler)
 
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                .and()
-                .authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/a", "/api/**","/", "/login", "/signup", "/api/authenticate", "/api/signup", "/shop/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+            .and()
+            .authorizeRequests()
+            .antMatchers("/resources/**").permitAll()
+            .antMatchers("/api/**","/", "/login", "/signup", "/goods/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .apply(new JwtSecurityConfig(tokenProvider));
 
     }
 }
