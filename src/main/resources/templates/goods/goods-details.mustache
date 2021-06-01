@@ -34,6 +34,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
                         <h3>{{goods.name}}</h3>
+                        <input type="hidden" value="{{goods.categoryId}}" id="goodsCategoryId">
                         <div class="product__details__rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -152,6 +153,8 @@
         </div>
     </section>
     <!-- Related Product Section End -->
+
+{{>layout/footer}}
 <script type="text/javascript">
     $(document).ready(function() {
         let getPath = (goodsAttach) => {
@@ -169,7 +172,7 @@
                 for (let product in result) {
                     let relatedProduct = result[product];
                     let path = getPath(relatedProduct.attachList[0]);
-                    let detailUrl = "/goods-detail/" + relatedProduct.id;
+                    let detailUrl = "/goods/" + relatedProduct.id;
                     shopRecommendArray.push(`
 
                     <div class="col-lg-3 col-md-4 col-sm-6">
@@ -196,4 +199,3 @@
         });
     });
 </script>
-{{>layout/footer}}

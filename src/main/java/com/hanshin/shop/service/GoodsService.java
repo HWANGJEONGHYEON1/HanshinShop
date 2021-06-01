@@ -55,8 +55,12 @@ public class GoodsService {
 
     private List<Goods> getShuffleList(List<Goods> allGoodsList) {
         Collections.shuffle(allGoodsList);
+        int limitCount = 4;
+        if (allGoodsList.size() < 4 ) {
+            limitCount = allGoodsList.size();
+        }
         return allGoodsList.stream()
-                .limit(4)
+                .limit(limitCount)
                 .collect(Collectors.toList());
     }
 }

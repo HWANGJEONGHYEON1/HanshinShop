@@ -10,7 +10,6 @@
 'use strict';
 
 (function ($) {
-
     /*------------------
         Preloader
     --------------------*/
@@ -280,7 +279,7 @@
                 for (let recommend in result) {
                     let recommends = result[recommend];
                     let path = getPath(recommends.attachList[0]);
-                    let detailUrl = "/goods-detail/" + recommends.id;
+                    let detailUrl = "/goods/" + recommends.id;
                     shopRecommendArray.push(`
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="${path}">
@@ -301,7 +300,7 @@
         for (let shop in result) {
             let goods = result[shop];
             let path = getPath(goods.attachList[0]);
-            let detailUrl = "/goods-detail/" + goods.id;
+            let detailUrl = "/goods/" + goods.id;
             shopArray.push(`
                     <div class="col-lg-3 col-md-4 col-sm-6 mix ${goods.categoryId}">
                     <div class="featured__item">

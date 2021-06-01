@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
+
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="Ogani Template">
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +13,6 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-    <script src="/js/jquery-3.3.1.min.js"></script>
     <!-- Css Styles -->
     <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
@@ -50,18 +51,30 @@
                             <a href="#"><i class="fa fa-linkedin"></i></a>
                             <a href="#"><i class="fa fa-pinterest-p"></i></a>
                         </div>
+<!--                        <div class="header__top__right__language">-->
+<!--                            <img src="/img/language.png" alt="">-->
+<!--                            <div>Korea</div>-->
+<!--                            <span class="arrow_carrot-down"></span>-->
+<!--                            <ul>-->
+<!--                                <li><a href="#">Korea</a></li>-->
+<!--&lt;!&ndash;                                <li><a href="#">English</a></li>&ndash;&gt;-->
+<!--                            </ul>-->
+<!--                        </div>-->
+                        {{#userName}}
                         <div class="header__top__right__language">
-                            <img src="/img/language.png" alt="">
-                            <div>English</div>
+                            <div>{{userName}}</div>
                             <span class="arrow_carrot-down"></span>
                             <ul>
-                                <li><a href="#">Spanis</a></li>
-                                <li><a href="#">English</a></li>
+                                <li><button type="button" id="logoutButton"/><i class="fa fa-user"></i> Logout</li>
+                                <!--                                <li><a href="#">English</a></li>-->
                             </ul>
                         </div>
+                        {{/userName}}
+                        {{^userName}}
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                            <span><a href="/login"><i class="fa fa-user"></i> Login</a></span>
                         </div>
+                        {{/userName}}
                     </div>
                 </div>
             </div>
@@ -88,8 +101,8 @@
                                 <li><a href="/blogDetail">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="/blog">Blog</a></li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/admin/blog">Blog</a></li>
+                        <li><a href="/shop/contact">Contact</a></li>
                     </ul>
                 </nav>
             </div>

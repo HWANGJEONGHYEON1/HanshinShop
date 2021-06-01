@@ -21,18 +21,12 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/goods-detail")
 public class GoodsDetailController {
     private final GoodsService goodsService;
     private final GoodsAttachMapper goodsAttachMapper;
     private final CategoryMapper categoryMapper;
 
-    @GetMapping("")
-    public String goodsDetail() {
-        return "goods/goods-details";
-    }
-
-    @GetMapping("/{id}")
+    @GetMapping("/goods/{id}")
     public String goodsDetail(@PathVariable Long id, Model model) {
         final Goods goods = goodsService.findOne(id);
         final List<GoodsAttachVO> attach = goodsAttachMapper.findByGoodsId(id);
@@ -44,9 +38,10 @@ public class GoodsDetailController {
         return "goods/goods-details";
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("/goods-detail/category/{id}")
     @ResponseBody
     public ResponseEntity<List<Goods>> categories(@PathVariable Long id) {
+        log.info("# id {}", id);
         return new ResponseEntity<>(goodsService.findListOfRelated(id), HttpStatus.OK);
     }
 
