@@ -220,6 +220,7 @@
         $button.parent().find('input').val(newVal);
     });
 
+    initUserInfo();
     initCategory();
     initMainShop();
     initMainRecommend();
@@ -239,6 +240,50 @@
     let getPath = (goodsAttach) => {
         let path = "/img/" + goodsAttach.uploadPath + "/" + goodsAttach.uuid + "_" + goodsAttach.fileName;
         return path;
+    }
+
+    function initUserInfo() {
+        $.ajax({
+            url: "/api/user/info",
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                let loginDivArray = [];
+                if (!$.isEmptyObject(result)) {
+                    initCartCount(result.id);
+                    loginDivArray.push(`
+                    <div class="header__top__right__language">
+                        <div id="username" data-id="${result.id}">${result.name}</div>
+                        <span class="arrow_carrot-down"></span>
+                        <ul>
+                            <li><button type="button" id="logoutButton"/><i class="fa fa-user"></i> Logout</li>
+                        </ul>
+                    </div>
+                `);
+
+                } else {
+                    loginDivArray.push(`
+                    <div class="header__top__right__auth">
+                        <span><a href="/login"><i class="fa fa-user"></i> Login</a></span>
+                    </div>                
+                `);
+                }
+
+                $("#loginDiv").append(loginDivArray);
+            }
+        });
+    }
+
+    function initCartCount(userId) {
+        $.ajax({
+            url: "/member/cartCount/" + userId,
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                $("#cartCount").empty();
+                $("#cartCount").append(`<a href="/member/cart?userId=${userId}"><i class="fa fa-shopping-bag"></i> <span>${result}</span></a>`);
+            }
+        });
     }
 
     function initCategory() {
@@ -302,14 +347,19 @@
             let path = getPath(goods.attachList[0]);
             let detailUrl = "/goods/" + goods.id;
             shopArray.push(`
-                    <div class="col-lg-3 col-md-4 col-sm-6 mix ${goods.categoryId}">
+                <div class="col-lg-3 col-md-4 col-sm-6 mix ${goods.categoryId}">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="${path}">
                             <img src="${path}" />
                             <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+<!--                                <li><a href="#"><i class="fa fa-heart"></i></a></li>-->
+                                <li>
+                                    <a id="saveCartBtn" 
+                                        data-id="${goods.id}"
+                                        data-amount="1"
+                                        ><i class="fa fa-shopping-cart"></i>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                         <div class="featured__item__text">
@@ -323,4 +373,33 @@
         $("#shopMain").empty();
         $("#shopMain").append(shopArray);
     }
+
+    $(document).on("click", "#saveCartBtn", function (e) {
+        let goodsId = $(this).data("id");
+        let amount = $(this).data("amount") == 1 ? $(this).data("amount") : $("#amount").val();
+        let userId = $("#username").data("id");
+        if (!userId) {
+            alert("로그인 후 시도하세요");
+            return;
+        }
+
+        let data = {
+            userId : userId,
+            goodsId : goodsId,
+            amount : amount
+        };
+
+        $.ajax({
+            url: '/member/cart/' + userId,
+            dataType: 'text',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function () {
+                alert("장바구니에 담겼습니다.");
+                initCartCount(userId);
+            }
+        });
+    });
+
 })(jQuery);
