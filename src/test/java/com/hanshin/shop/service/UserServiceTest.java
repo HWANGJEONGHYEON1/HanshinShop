@@ -2,8 +2,8 @@ package com.hanshin.shop.mapper;
 
 import com.hanshin.shop.controller.user.dto.UserDto;
 import com.hanshin.shop.service.UserService;
-import com.hanshin.shop.entity.RoleType;
-import com.hanshin.shop.entity.UserRole;
+import com.hanshin.shop.entity.user.RoleType;
+import com.hanshin.shop.entity.user.UserRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
