@@ -1,10 +1,8 @@
-package com.hanshin.shop.entity;
+package com.hanshin.shop.entity.goods;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

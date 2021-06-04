@@ -44,37 +44,13 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="header__top__right">
+                    <div class="header__top__right" id="loginDiv">
                         <div class="header__top__right__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-linkedin"></i></a>
                             <a href="#"><i class="fa fa-pinterest-p"></i></a>
                         </div>
-<!--                        <div class="header__top__right__language">-->
-<!--                            <img src="/img/language.png" alt="">-->
-<!--                            <div>Korea</div>-->
-<!--                            <span class="arrow_carrot-down"></span>-->
-<!--                            <ul>-->
-<!--                                <li><a href="#">Korea</a></li>-->
-<!--&lt;!&ndash;                                <li><a href="#">English</a></li>&ndash;&gt;-->
-<!--                            </ul>-->
-<!--                        </div>-->
-                        {{#userName}}
-                        <div class="header__top__right__language">
-                            <div>{{userName}}</div>
-                            <span class="arrow_carrot-down"></span>
-                            <ul>
-                                <li><button type="button" id="logoutButton"/><i class="fa fa-user"></i> Logout</li>
-                                <!--                                <li><a href="#">English</a></li>-->
-                            </ul>
-                        </div>
-                        {{/userName}}
-                        {{^userName}}
-                        <div class="header__top__right__auth">
-                            <span><a href="/login"><i class="fa fa-user"></i> Login</a></span>
-                        </div>
-                        {{/userName}}
                     </div>
                 </div>
             </div>
@@ -96,8 +72,8 @@
                             <ul class="header__menu__dropdown">
                                 <li><a href="/goods-detail">Shop Details</a></li>
                                 <li><a href="/goods/new">상품등록(admin)</a></li>
-                                <li><a href="/cart">Shopping Cart</a></li>
-                                <li><a href="/order">Check Out</a></li>
+                                <li><a href="/member/cart">Shopping Cart</a></li>
+                                <li><a href="/member/order">Check Out</a></li>
                                 <li><a href="/blogDetail">Blog Details</a></li>
                             </ul>
                         </li>
@@ -110,7 +86,9 @@
                 <div class="header__cart">
                     <ul>
                         <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li id="cartCount">
+<!--                            <a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a>-->
+                        </li>
                     </ul>
                     <div class="header__cart__price">item: <span>$150.00</span></div>
                 </div>

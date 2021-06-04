@@ -1,4 +1,4 @@
-package com.hanshin.shop.mapper;
+package com.hanshin.shop.service;
 
 import com.hanshin.shop.controller.user.dto.UserDto;
 import com.hanshin.shop.service.UserService;
@@ -20,19 +20,6 @@ public class UserServiceTest {
     @Autowired
     private UserService userService;
 
-    @Test
-    @DisplayName("유저 정보 저장")
-    void register() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        UserDto user = UserDto.builder()
-                .email("abc@gmail.com")
-                .password(bCryptPasswordEncoder.encode("123"))
-                .name("hwang")
-                .userRoles(Arrays.asList(new UserRole("abc@gmail.com", RoleType.ROLE_MEMBER)))
-                .build();
-
-        userService.signUp(user);
-    }
 
     @Test
     @DisplayName("아이디 중복 확인")
