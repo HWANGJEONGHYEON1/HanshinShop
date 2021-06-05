@@ -1,6 +1,6 @@
 package com.hanshin.shop.repository;
 
-import com.hanshin.shop.entity.CategoryVO;
+import com.hanshin.shop.entity.goods.CategoryVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

@@ -1,17 +1,17 @@
 let main = {
     init : function () {
         let _this = this;
-        $("#loginButton").on("click", function (){
+        $(document).on("click", "#loginButton", function (){
             console.log("# loginButton")
             _this.login();
         });
 
-        $("#logoutButton").on("click", function (){
+        $(document).on("click", "#logoutButton", function (){
             console.log("# logoutButton")
             _this.logout();
         })
 
-        $("#signup").on("click", function (){
+        $(document).on("click","#signup", function (){
             console.log("# signupButton")
             _this.signup();
         })

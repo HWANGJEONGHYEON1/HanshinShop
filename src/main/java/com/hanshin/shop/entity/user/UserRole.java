@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity;
+package com.hanshin.shop.entity.user;
 
 
 import lombok.*;

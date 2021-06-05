@@ -137,3 +137,5 @@ ALTER TABLE attach ADD CONSTRAINT IDX_Attach_PK PRIMARY KEY (uuid);
 alter table attach change fileName file_name varchar(100);
 
 alter table category drop column goods_id;
+
+alter table cart change goods_count amount int;

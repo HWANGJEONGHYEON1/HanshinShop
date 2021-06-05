@@ -1,8 +1,7 @@
 package com.hanshin.shop.repository;
 
-import com.hanshin.shop.entity.Goods;
-import com.hanshin.shop.entity.GoodsDto;
-import org.apache.ibatis.session.SqlSession;
+import com.hanshin.shop.entity.goods.Goods;
+import com.hanshin.shop.entity.goods.GoodsDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 
@@ -14,8 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -46,21 +43,11 @@ class GoodsMapperTest {
     @Test
     public void findOne() throws Exception {
         //given
-        final Goods goods = mapper.findOne(1L);
+        final Goods goods = mapper.findOne(27L);
         //when
 
         //then
-        Assertions.assertThat(goods.getName()).isEqualTo("test1");
+        Assertions.assertThat(goods.getName()).isEqualTo("피망");
     }
 
-    @Test
-    public void 상품저장() throws Exception {
-        //given
-        GoodsDto dto = new GoodsDto("test", 40000, "Test 설명");
-        Goods goods = Goods.create(dto);
-        //when
-        mapper.save(goods);
-        //then
-        Assertions.assertThat(mapper.findOne(goods.getId()).getName()).isEqualTo("test");
-    }
 }

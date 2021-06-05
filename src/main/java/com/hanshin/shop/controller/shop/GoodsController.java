@@ -1,7 +1,9 @@
 package com.hanshin.shop.controller.shop;
 
-import com.hanshin.shop.entity.CategoryVO;
-import com.hanshin.shop.entity.Goods;
+import com.hanshin.shop.entity.goods.CategoryVO;
+import com.hanshin.shop.entity.goods.Goods;
+import com.hanshin.shop.entity.user.LoginUser;
+import com.hanshin.shop.entity.user.User;
 import com.hanshin.shop.repository.CategoryMapper;
 import com.hanshin.shop.repository.GoodsAttachMapper;
 import com.hanshin.shop.service.GoodsService;
@@ -21,13 +23,7 @@ import java.util.List;
 public class GoodsController {
 
     private final GoodsService goodsService;
-    private final GoodsAttachMapper attachMapper;
     private final CategoryMapper categoryMapper;
-
-//    @GetMapping("")
-//    public String shop() {
-//        return "shop/shop-grid";
-//    }
 
     @GetMapping("/new")
     public String registerForm() {
@@ -42,8 +38,8 @@ public class GoodsController {
             goods.getAttachList()
                     .forEach(attach -> log.info("### {} , {}", attach.getFileName(), attach.getUploadPath()));
         }
-        goodsService.save(goods);
 
+        goodsService.save(goods);
         return "redirect:/";
     }
 
@@ -51,14 +47,12 @@ public class GoodsController {
     @ResponseBody
     public ResponseEntity<List<Goods>> list() {
         final List<Goods> goodsAll = goodsService.findAllList();
-
         return new ResponseEntity<>(goodsAll, HttpStatus.OK);
     }
 
     @GetMapping("/recommend")
     @ResponseBody
     public ResponseEntity<List<Goods>> recommendList() {
-
         return new ResponseEntity<>(goodsService.findRecommendGoods(), HttpStatus.OK);
     }
 

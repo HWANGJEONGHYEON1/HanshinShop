@@ -2,7 +2,7 @@ package com.hanshin.shop.controller.user;
 
 import com.hanshin.shop.config.jwt.JwtFilter;
 import com.hanshin.shop.controller.user.dto.UserDto;
-import com.hanshin.shop.entity.User;
+import com.hanshin.shop.entity.user.User;
 import com.hanshin.shop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{username}")
+    @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
     public ResponseEntity<User> getMyUserInfo(@PathVariable String username) {
 

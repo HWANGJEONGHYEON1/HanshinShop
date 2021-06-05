@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity;
+package com.hanshin.shop.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

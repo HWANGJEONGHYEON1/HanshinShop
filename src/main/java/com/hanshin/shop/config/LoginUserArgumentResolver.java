@@ -1,7 +1,7 @@
 package com.hanshin.shop.config;
 
-import com.hanshin.shop.entity.LoginUser;
-import com.hanshin.shop.entity.User;
+import com.hanshin.shop.entity.user.LoginUser;
+import com.hanshin.shop.entity.user.User;
 import com.hanshin.shop.repository.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

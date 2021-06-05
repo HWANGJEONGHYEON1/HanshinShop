@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity;
+package com.hanshin.shop.entity.goods;
 
 import lombok.*;
 
@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Goods {
@@ -32,12 +31,17 @@ public class Goods {
 
     private List<GoodsAttachVO> attachList;
 
-    public static Goods create(GoodsDto goodsDto) {
-        Goods goods = new Goods();
-        goods.setName(goodsDto.getName());
-        goods.setPrice(goodsDto.getPrice());
-        goods.setDescription(goodsDto.getDescription());
-
-        return goods;
+    private Goods(GoodsDto dto) {
+        this.name = dto.getName();;
+        this.categoryId = dto.getCategoryId();
+        this.price = dto.getPrice();
+        this.description = dto.getDescription();
     }
+
+    public static Goods create(GoodsDto goodsDto) {
+        return new Goods(goodsDto);
+    }
+
+
+
 }

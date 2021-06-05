@@ -15,6 +15,6 @@ public class CommonExceptionHandler {
 
         log.error("Exception ... " + e);
         model.addAttribute("exception", e);
-        return "/error/error_page";
+        return "error/error_page";
     }
 }

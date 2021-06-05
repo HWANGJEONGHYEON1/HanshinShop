@@ -7,19 +7,19 @@
             return path;
         }
 
-        $.ajax({
-            url: '/goods-detail/category/' + $("#goodsCategoryId").val(),
-            dataType: 'json',
-            type: 'get',
-            success: function (result) {
-            let shopRecommendArray = [];
-            shopRecommendArray.push(`<div class="categories__slider owl-carousel">`)
-            for (let product in result) {
-                let relatedProduct = result[product];
+        if ($("#goodsCategoryId").val()) {
+            $.ajax({
+                url: '/goods-detail/category/' + $("#goodsCategoryId").val(),
+                dataType: 'json',
+                type: 'get',
+                success: function (result) {
+                let shopRecommendArray = [];
+                shopRecommendArray.push(`<div class="categories__slider owl-carousel">`);
+
+                let relatedProduct = result[0];
                 let path = getPath(relatedProduct.attachList[0]);
                 let detailUrl = "/goods/" + relatedProduct.id;
                 shopRecommendArray.push(`
-
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="${path}">
@@ -37,9 +37,9 @@
                         </div>
                     </div>
                 `);
-            }
-            shopRecommendArray.push(`</div>`);
-            $("#relatedProduct").append(shopRecommendArray);
+                shopRecommendArray.push(`</div>`);
+                $("#relatedProduct").append(shopRecommendArray);
+                }
+             });
         }
-    });
 })(jQuery);

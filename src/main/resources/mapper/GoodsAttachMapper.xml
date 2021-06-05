@@ -13,7 +13,7 @@
         delete from attach where uuid = #{uuid}
     </delete>
 
-    <select id="findByGoodsId" resultType="com.hanshin.shop.entity.GoodsAttachVO">
+    <select id="findByGoodsId" resultType="com.hanshin.shop.entity.goods.GoodsAttachVO">
         select * from attach where goods_id = #{id}
     </select>
 
@@ -21,7 +21,7 @@
         delete attach where goods_id = #{goods_id}
     </delete>
 
-    <select id="getOldFiles" resultType="com.hanshin.shop.entity.GoodsAttachVO">
+    <select id="getOldFiles" resultType="com.hanshin.shop.entity.goods.GoodsAttachVO">
         select * from attach where upload_path = to_char(sysdate - 1,'yyyy/mm/dd')
     </select>
 </mapper>

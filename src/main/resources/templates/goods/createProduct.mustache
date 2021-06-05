@@ -111,7 +111,6 @@ $(document).ready(function(){
 
     $(".uploadResult").on("click", "span", function (e) {
         let target = $(this).data("file");
-        console.log("# target " + target);
         let targetLi = $(this).closest("li");
 
         $.ajax({

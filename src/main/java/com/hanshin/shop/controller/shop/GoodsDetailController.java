@@ -1,7 +1,7 @@
 package com.hanshin.shop.controller.shop;
 
-import com.hanshin.shop.entity.Goods;
-import com.hanshin.shop.entity.GoodsAttachVO;
+import com.hanshin.shop.entity.goods.Goods;
+import com.hanshin.shop.entity.goods.GoodsAttachVO;
 import com.hanshin.shop.repository.CategoryMapper;
 import com.hanshin.shop.repository.GoodsAttachMapper;
 import com.hanshin.shop.service.GoodsService;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;

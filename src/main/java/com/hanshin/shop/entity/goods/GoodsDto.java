@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity;
+package com.hanshin.shop.entity.goods;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,4 +12,6 @@ public class GoodsDto {
     private int price;
 
     private String description;
+
+    private Long categoryId;
 }
