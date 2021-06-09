@@ -7,28 +7,33 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 //@RequiredArgsConstructor(staticName = "of")
-public class OrderGoods {
+public class OrderGoodsVO {
 
     private Long id;
 
-    private Goods goods;
+    private Long goodsId;
 
-    private Order order;
+    private Long orderId;
 
     private int orderPrice;
 
     private int amount;
 
-    public static OrderGoods createOrder(Goods goods, int orderPrice, int count) {
-        return OrderGoods.builder()
-                .goods(goods)
+    public static OrderGoodsVO createOrderGoods(Long goodsId, int orderPrice, int count) {
+        return OrderGoodsVO.builder()
+                .goodsId(goodsId)
                 .orderPrice(orderPrice)
                 .amount(count)
                 .build();
-    }
+    }src/main/java/com/hanshin/shop/entity/order/OrderGoodsVO.java
 
     public int getTotalPrice() {
         return getOrderPrice() * getAmount();
     }
+
+    public void receiveOrderId(Long id) {
+        this.orderId = id;
+    }
+
 
 }

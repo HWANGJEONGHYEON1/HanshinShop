@@ -1,2 +1,15 @@
-package com.hanshin.shop.entity.order;public class OrderDto {
+package com.hanshin.shop.entity.order;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
+@AllArgsConstructor
+public class OrderDto {
+
+    private Long goodsId;
+    private int amount;
+
 }
