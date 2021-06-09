@@ -24,7 +24,7 @@ let main = {
             password : $("#password").val(),
             name : $("#name").val(),
             tel : $("#tel").val(),
-            addr : $("#addr").val(),
+            address : $("#addr").val(),
             birth : $("#birth").val(),
             account : $("#account").val(),
         }
