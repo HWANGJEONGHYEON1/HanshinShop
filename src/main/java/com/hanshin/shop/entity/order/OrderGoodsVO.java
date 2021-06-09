@@ -25,7 +25,7 @@ public class OrderGoodsVO {
                 .orderPrice(orderPrice)
                 .amount(count)
                 .build();
-    }src/main/java/com/hanshin/shop/entity/order/OrderGoodsVO.java
+    }
 
     public int getTotalPrice() {
         return getOrderPrice() * getAmount();
