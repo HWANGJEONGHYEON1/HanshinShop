@@ -6,6 +6,7 @@
         return path;
     }
 
+    let data;
     function cartList() {
 
         $.ajax({
@@ -15,6 +16,7 @@
             success: function (result) {
                 let cartArray = [];
                 let cartTotal = 0;
+                data = result;
                 for (let carts in result) {
                     let cart = result[carts];
                     let path = getPath(cart.attachList[0]);
@@ -65,7 +67,8 @@
                 cartList();
             }
         })
-    })
+    });
+
 
     $("#deleteAllBtn").on("click", function(e) {
         console.log("deleteAll");
@@ -76,6 +79,30 @@
             success: function (result) {
                 alert("전체삭제 되었습니다.");
                 location.href="/";
+            }
+        });
+    });
+
+    $("#orderBtn").on("click", function(e) {
+
+        let param = [];
+        for (let info in data) {
+            let orderInfo = {
+                "goodsId" : data[info].goodsId,
+                "amount" : data[info].amount
+            }
+            param.push(orderInfo);
+        }
+        $.ajax({
+            url: "/member/order/",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(param),
+            dataType: "text",
+            success: function (result) {
+                console.log(result);
+                alert("주문 되었습니다.");
+                location.href="/member/order"
             }
         });
     })
