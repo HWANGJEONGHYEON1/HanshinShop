@@ -10,6 +10,8 @@ public interface UserMapper {
 
     User findByEmail(String email);
 
+    User findById(Long userId);
+
     int isExistEmail(String email);
 
     int signUp(UserDto user);

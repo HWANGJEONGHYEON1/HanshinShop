@@ -32,6 +32,12 @@
         where goods.id = #{id}
     </select>
 
+    <select id="findGoodsOne" resultType="com.hanshin.shop.entity.goods.Goods">
+        select id, name, price, description, review_count, discount_rate, reg_date
+        from goods
+        where id = #{id}
+    </select>
+
     <select id="findAll" resultType="com.hanshin.shop.entity.goods.Goods">
         select id, name, price, description, review_count, discount_rate, reg_date
         from goods

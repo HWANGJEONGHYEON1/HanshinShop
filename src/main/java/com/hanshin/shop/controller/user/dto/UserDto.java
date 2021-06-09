@@ -32,7 +32,7 @@ public class UserDto {
 
     private String tel;
 
-    private String addr;
+    private String address;
 
     @NotNull
     @Size(min = 3, max = 50)

@@ -12,6 +12,8 @@ public interface GoodsMapper {
 
     void save(Goods goods);
 
+    Goods findGoodsOne(Long id);
+
     List<Goods> findAllList();
 
     List<Goods> findListOfCategory(Long categoryId);

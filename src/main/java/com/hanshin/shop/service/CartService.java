@@ -44,7 +44,13 @@ public class CartService {
         return cartMapper.delete(id);
     }
 
-    @Transactional public int deleteAll(Long userId) {
+    @Transactional
+    public int deleteAll(Long userId) {
+        final List<CartVO> all = cartMapper.findAll(userId);
+        log.info("deleteALl {}", all.size());
+        if (all.isEmpty() || all.size() == 0) {
+            throw new IllegalStateException("삭제할 상품이 없습니다.");
+        }
         return cartMapper.deleteAll(userId);
     }
 }
