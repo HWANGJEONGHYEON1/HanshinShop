@@ -251,6 +251,7 @@
                 let loginDivArray = [];
                 if (!$.isEmptyObject(result)) {
                     initCartCount(result.id);
+                    initOrderCount();
                     loginDivArray.push(`
                     <div class="header__top__right__language">
                         <div id="username" data-id="${result.id}">${result.name}</div>
@@ -270,6 +271,19 @@
                 }
 
                 $("#loginDiv").append(loginDivArray);
+            }
+        });
+    }
+
+    function initOrderCount() {
+        $.ajax({
+            url: "/member/orderCount/",
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                console.log("# " + result);
+                $("#orderCount").empty();
+                $("#orderCount").append(`<a href="/member/order"><i class="fa fa-heart"></i> <span>${result}</span></a>`);
             }
         });
     }
