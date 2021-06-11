@@ -34,7 +34,7 @@
                             <td class="shoping__cart__quantity">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="${cart.amount}">
+                                        <input id="quantity" type="text" value="${cart.amount}">
                                     </div>
                                 </div>
                             </td>
@@ -57,7 +57,7 @@
     cartList();
 
     $(document).on("click", "#deleteBtn", function(e) {
-
+        
         let cartId = $(this).data("id");
         $.ajax({
             url: "/member/cart/" + cartId,
@@ -71,7 +71,11 @@
 
 
     $("#deleteAllBtn").on("click", function(e) {
-        console.log("deleteAll");
+        if (data.length == 0) {
+            alert("삭제할 상품이 없습니다.");
+            return;
+        }
+
         $.ajax({
             url: "/member/carts/" + userId,
             method: "delete",
