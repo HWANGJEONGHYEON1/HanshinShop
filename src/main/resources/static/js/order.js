@@ -6,6 +6,11 @@
         return path;
     }
 
+    function convertDate(date) {
+        let serverDate = new Date(date);
+        return serverDate.getFullYear() + "." +serverDate.getMonth() + "." + serverDate.getDay();
+    }
+
     let data;
     function orderList() {
         $.ajax({
@@ -16,12 +21,14 @@
                 console.log(result)
                 let orderArray = []
                 let orderTotal = 0;
+                let date;
                 data = result;
                 for (let orders in result) {
                     let order = result[orders];
                     let path = getPath(order);
                     let total = order.orderPrice * order.amount;
                     orderTotal += total;
+                    date = convertDate(order.orderDate);
                     orderArray.push(`
                         <tr>
                             <td class="shoping__cart__item">
@@ -38,7 +45,7 @@
                                 ${order.address}
                             </td>
                             <td class="shoping__cart__total">
-                                ${order.orderDate}
+                                ${date}
                             </td>
                             <td class="shoping__cart__total">
                                 ${order.state}
