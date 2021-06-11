@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ import java.util.UUID;
 
 @RestController
 @Slf4j
+@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class UploadController {
 
     private static final String uploadFolder = "/Users/hwangjeonghyeon/IdeaProjects/HanshinShop/src/main/resources/static/img/";

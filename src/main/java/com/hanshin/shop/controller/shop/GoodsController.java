@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +32,9 @@ public class GoodsController {
     }
 
     @PostMapping("/new")
-    public String register(Goods goods) {
-        log.info("register {}" + goods);
+    @ResponseBody
+    public ResponseEntity<String> register(@RequestBody Goods goods) {
+        log.info("# register {}" + goods);
 
         if (goods.getAttachList() != null) {
             goods.getAttachList()
@@ -40,7 +42,8 @@ public class GoodsController {
         }
 
         goodsService.save(goods);
-        return "redirect:/";
+
+        return new ResponseEntity<>("CREATED", HttpStatus.OK);
     }
 
     @GetMapping("/main")
