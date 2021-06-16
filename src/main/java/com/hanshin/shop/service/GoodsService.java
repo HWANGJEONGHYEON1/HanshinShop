@@ -1,6 +1,7 @@
 package com.hanshin.shop.service;
 
 import com.hanshin.shop.entity.goods.Goods;
+import com.hanshin.shop.entity.paging.Criteria;
 import com.hanshin.shop.repository.GoodsAttachMapper;
 import com.hanshin.shop.repository.GoodsMapper;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,13 @@ public class GoodsService {
         });
     }
 
-    public List<Goods> findAllList() {
-        return goodsMapper.findAllList();
+//    public List<Goods> findAllList() {
+//        return goodsMapper.findAllList();
+//    }
+
+    public List<Goods> findAllList(Criteria criteria) {
+        log.info("cri {}", criteria);
+        return goodsMapper.getListWithPaging(criteria);
     }
 
     public List<Goods> findRecommendGoods() {
