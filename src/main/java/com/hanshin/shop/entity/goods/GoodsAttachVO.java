@@ -15,4 +15,9 @@ public class GoodsAttachVO {
 
     private Long goodsId;
 
+    public GoodsAttachVO(String uuid, String uploadPath, String fileName) {
+        this.uuid = uuid;
+        this.uploadPath = uploadPath;
+        this.fileName = fileName;
+    }
 }

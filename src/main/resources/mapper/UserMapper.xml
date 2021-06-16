@@ -9,7 +9,7 @@
         <id property="name" column="name" />
         <id property="tel" column="tel" />
         <id property="account" column="account" />
-        <id property="addr" column="addr" />
+        <id property="address" column="address" />
         <id property="email" column="email" />
         <id property="birth" column="birth" />
         <collection property="userRoles" resultMap="userRoleMap"></collection>
@@ -21,13 +21,13 @@
     </resultMap>
 
     <select id="findByEmail" resultMap="userMap">
-        select id, account, name, password, tel, addr, u.email, birth, r.role
+        select id, account, name, password, tel, address, u.email, birth, r.role
         from user u left join user_role r on u.email = r.email
         where u.email = #{email}
     </select>
 
     <select id="findById" resultType="com.hanshin.shop.entity.user.User">
-        SELECT id, password, name, tel, account, addr, email, birth
+        SELECT id, password, name, tel, account, address, email, birth
         FROM user
         WHERE id = #{id}
     </select>
@@ -39,8 +39,8 @@
     </select>
 
     <insert id="signUp" >
-        insert into user (password, name, tel, addr, email, birth, account)
-        values( #{password}, #{name}, #{tel}, #{addr}, #{email}, #{birth}, #{account})
+        insert into user (password, name, tel, address, email, birth, account)
+        values( #{password}, #{name}, #{tel}, #{address}, #{email}, #{birth}, #{account})
     </insert>
 
     <insert id="registerRole">
