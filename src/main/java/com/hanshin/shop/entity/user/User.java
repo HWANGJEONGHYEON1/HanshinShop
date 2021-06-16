@@ -28,7 +28,7 @@ public class User {
 
     private String tel;
 
-    private String addr;
+    private String address;
 
     private String email;
 
@@ -44,7 +44,7 @@ public class User {
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
                 ", tel='" + tel + '\'' +
-                ", addr='" + addr + '\'' +
+                ", addr='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", birth='" + birth + '\'' +
                 ", roles=" + userRoles.toString() +

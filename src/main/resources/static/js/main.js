@@ -341,9 +341,11 @@
     }
 
     function makeMainShopDiv(result) {
+        let pageMaker = result.pageMaker;
+        let listData = result.goodsAll;
         let shopArray = [];
-        for (let shop in result) {
-            let goods = result[shop];
+        for (let shop in listData) {
+            let goods = listData[shop];
             let path = getPath(goods.attachList[0]);
             let detailUrl = "/goods/" + goods.id;
             shopArray.push(`
@@ -370,9 +372,43 @@
                 </div>
             `);
         }
+
+        if (pageMaker.prev) {
+            $(".pagination").append(`<li class="paginate_button previous"><a href="${pageMaker.prev - 1}">Previous</a></li>`);
+        }
+
+        for (let i = pageMaker.startPage; i < pageMaker.endPage; i++) {
+            $(".pagination").append(`
+                <li class="paginate_button ${pageMaker.criteria.pageNum == i ? "active" : ""}">
+                    <a href="${i}" data-pagenum="${i}" data-amount="${pageMaker.criteria.amount}"> ${i} 
+                    </a>
+                </li>`);
+
+        }
+
+        if (pageMaker.next) {
+            $(".pagination").append(`<li class="paginate_button next"><a href="${pageMaker.endPage + 1}">Next</a></li>`);
+        }
+
         $("#shopMain").empty();
         $("#shopMain").append(shopArray);
     }
+
+    $(document).on("click", ".paginate_button a", function (e) {
+        e.preventDefault();
+        let pageNum = $(this).data("pagenum");
+        let amount = $(this).data("amount");
+
+        $.ajax({
+            url: '/goods/main?pageNum=' + pageNum + "&amount=" + amount,
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                $(".pagination").empty();
+                makeMainShopDiv(result);
+            }
+        });
+    })
 
     $(document).on("click", "#saveCartBtn", function (e) {
         let goodsId = $(this).data("id");
@@ -396,7 +432,7 @@
             data: JSON.stringify(data),
             type: 'post',
             success: function () {
-                alert("장바구니에 담겼습니다.");
+                alert("장바구니에 담겼습니 다.");
                 initCartCount(userId);
             }
         });

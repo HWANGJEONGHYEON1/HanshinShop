@@ -39,7 +39,11 @@
 
     <select id="findAllList" resultMap="goodsMap">
         <include refid="all" />
-
+        <![CDATA[
+            where goods.id > 0
+            order by goods.id desc
+            limit 0, 20;
+        ]]>
     </select>
 
     <select id="findListOfCategory" resultMap="goodsMap">
@@ -47,6 +51,22 @@
         <if test="categoryId > 0">
             where category_id = #{categoryId}
         </if>
+    </select>
+
+    <select id="getListWithPaging" resultMap="goodsMap">
+        <![CDATA[
+                select id, name, description, category_id,price, uuid, upload_path, file_name
+                from (
+                    select @rownum:=@rownum+1 rn, goods.id, goods.name, goods.description, goods.category_id, goods.price, attach.uuid, attach.upload_path, attach.file_name
+                    from goods goods
+                        join attach attach
+                        on goods.id = attach.goods_id
+                        join category category
+                        on goods.category_id = category.id
+                    , (SELECT @rownum:=0) TMP
+                ) aa
+                where rn <= #{pageNum} * #{amount} and rn >(#{pageNum} - 1) * #{amount};
+        ]]>
     </select>
 
     <sql id="all">
