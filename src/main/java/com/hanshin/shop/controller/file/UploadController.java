@@ -1,10 +1,11 @@
 package com.hanshin.shop.controller.file;
 
-import com.hanshin.shop.entity.goods.AttachFileDto;
+import com.hanshin.shop.vo.goods.AttachFileDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,19 +27,20 @@ import java.util.UUID;
 
 @RestController
 @Slf4j
+@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class UploadController {
 
     private static final String uploadFolder = "/Users/hwangjeonghyeon/IdeaProjects/HanshinShop/src/main/resources/static/img/";
 
     @PostMapping("/deleteFile")
-    public ResponseEntity<String> deleteFile(String fileName) throws UnsupportedEncodingException {
+    public ResponseEntity<Void> deleteFile(String fileName) throws UnsupportedEncodingException {
         log.info("fileName {}", fileName);
 
         File file;
         file = new File(uploadFolder + URLDecoder.decode(fileName, "UTF-8"));
         file.delete();
 
-        return new ResponseEntity<>("deleted", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/display")

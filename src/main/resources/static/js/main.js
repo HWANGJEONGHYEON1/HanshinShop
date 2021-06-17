@@ -228,7 +228,7 @@
     $("#categories").on("click", "li", function(){
         let id = $(this).attr("id");
         $.ajax({
-            url: "/goods/category/" + id,
+            url: "/api/category/" + id,
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -251,6 +251,7 @@
                 let loginDivArray = [];
                 if (!$.isEmptyObject(result)) {
                     initCartCount(result.id);
+                    initOrderCount();
                     loginDivArray.push(`
                     <div class="header__top__right__language">
                         <div id="username" data-id="${result.id}">${result.name}</div>
@@ -274,9 +275,22 @@
         });
     }
 
+    function initOrderCount() {
+        $.ajax({
+            url: "/api/order/count",
+            dataType: 'json',
+            type: 'get',
+            success: function (result) {
+                console.log("# " + result);
+                $("#orderCount").empty();
+                $("#orderCount").append(`<a href="/member/order"><i class="fa fa-heart"></i> <span>${result}</span></a>`);
+            }
+        });
+    }
+
     function initCartCount(userId) {
         $.ajax({
-            url: "/member/cartCount/" + userId,
+            url: "/api/cart/count/" + userId,
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -288,7 +302,7 @@
 
     function initCategory() {
         $.ajax({
-            url: '/goods/categories',
+            url: '/api/categories',
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -304,7 +318,7 @@
 
     function initMainShop() {
         $.ajax({
-            url: '/goods/main',
+            url: '/api/main',
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -315,7 +329,7 @@
 
     function initMainRecommend() {
         $.ajax({
-            url: '/goods/recommend',
+            url: '/api/recommend',
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -400,7 +414,7 @@
         let amount = $(this).data("amount");
 
         $.ajax({
-            url: '/goods/main?pageNum=' + pageNum + "&amount=" + amount,
+            url: '/api/main?pageNum=' + pageNum + "&amount=" + amount,
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -426,13 +440,13 @@
         };
 
         $.ajax({
-            url: '/member/cart/' + userId,
+            url: '/api/cart/' + userId,
             dataType: 'text',
             contentType: 'application/json',
             data: JSON.stringify(data),
             type: 'post',
             success: function () {
-                alert("장바구니에 담겼습니 다.");
+                alert("장바구니에 담겼습니다.");
                 initCartCount(userId);
             }
         });

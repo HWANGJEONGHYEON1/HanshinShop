@@ -1,16 +1,12 @@
 package com.hanshin.shop.service;
 
-import com.hanshin.shop.entity.cart.CartDTO;
-import com.hanshin.shop.entity.cart.CartVO;
-import org.assertj.core.api.Assert;
+import com.hanshin.shop.vo.cart.CartDTO;
+import com.hanshin.shop.vo.cart.CartVO;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hanshin.shop.repository.UserMapper"><!--namespace를 통해 UserDAO와 연결합니다. -->
-    <resultMap id="userMap" type="com.hanshin.shop.entity.user.User">
+    <resultMap id="userMap" type="com.hanshin.shop.vo.user.User">
         <id property="id" column="id" />
         <id property="password" column="password" />
         <id property="name" column="name" />
@@ -15,7 +15,7 @@
         <collection property="userRoles" resultMap="userRoleMap"></collection>
     </resultMap>
 
-    <resultMap id="userRoleMap" type="com.hanshin.shop.entity.user.UserRole">
+    <resultMap id="userRoleMap" type="com.hanshin.shop.vo.user.UserRole">
         <result property="email" column="email" />
         <result property="role" column="role" />
     </resultMap>
@@ -26,7 +26,7 @@
         where u.email = #{email}
     </select>
 
-    <select id="findById" resultType="com.hanshin.shop.entity.user.User">
+    <select id="findById" resultType="com.hanshin.shop.vo.user.User">
         SELECT id, password, name, tel, account, address, email, birth
         FROM user
         WHERE id = #{id}
@@ -38,7 +38,8 @@
         where email = #{email}
     </select>
 
-    <insert id="signUp" >
+
+    <insert id="signUp">
         insert into user (password, name, tel, address, email, birth, account)
         values( #{password}, #{name}, #{tel}, #{address}, #{email}, #{birth}, #{account})
     </insert>

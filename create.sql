@@ -2,16 +2,13 @@
 /**********************************/
 /* Table Name: Order */
 /**********************************/
-CREATE TABLE `Order`(
+CREATE TABLE Orders (
                         id INT AUTO_INCREMENT primary key,
                         user_id INT,
-                        name VARCHAR(100),
-                        tel VARCHAR(100),
                         addr VARCHAR(100),
                         comment VARCHAR(100),
                         state VARCHAR(100),
-                        date TIMESTAMP DEFAULT now(),
-                        price INT
+                        order_date TIMESTAMP DEFAULT now()
 );
 
 /**********************************/
@@ -35,10 +32,13 @@ alter table user change pwd password varchar(100);
 /**********************************/
 /* Table Name: OrdersGoods */
 /**********************************/
-CREATE TABLE OrdersGoods(
-                            orders_id VARCHAR(100),
-                            goods_cont INT,
-                            goods_id INT
+CREATE TABLE order_goods(
+	id INT auto_increment,
+	order_id INT,
+	goods_id INT,
+    order_price INT,
+	count INT,
+    primary key(id)
 );
 
 /**********************************/

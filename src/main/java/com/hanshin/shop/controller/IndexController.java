@@ -1,21 +1,14 @@
 package com.hanshin.shop.controller;
 
-import com.hanshin.shop.entity.user.LoginUser;
-import com.hanshin.shop.entity.user.User;
-import com.hanshin.shop.utill.SecurityUtil;
-import lombok.RequiredArgsConstructor;
+import com.hanshin.shop.vo.user.LoginUser;
+import com.hanshin.shop.vo.user.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.Objects;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequiredArgsConstructor
 @Slf4j
 public class IndexController {
 
@@ -24,18 +17,29 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping("/api/user/info")
-    @ResponseBody
-    public ResponseEntity<User> info(@LoginUser User user) {
-        log.info("##### {}", user);
-        if (Objects.isNull(user)) {
-            return new ResponseEntity<>(new User(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/login")
+    public String login() {
+        return "/login/customLogin";
     }
 
-    @GetMapping("/a")
-    public String a() {
-        throw new IllegalStateException("부정확한 URL입니다.");
+    @GetMapping("/signup")
+    public String register() {
+        return "/login/signup";
+    }
+
+    @GetMapping("/member/cart")
+    public String cart(@RequestParam(value = "userId") String userId, Model model) {
+        model.addAttribute("userId", userId);
+        return "cart/shopping-cart";
+    }
+
+    @GetMapping("/goods/new")
+    public String registerForm() {
+        return "goods/createProduct";
+    }
+
+    @GetMapping("/member/order")
+    public String shopDetail() {
+        return "order/order-goods";
     }
 }

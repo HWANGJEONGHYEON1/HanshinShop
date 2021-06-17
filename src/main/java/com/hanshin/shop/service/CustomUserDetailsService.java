@@ -1,6 +1,6 @@
 package com.hanshin.shop.service;
 
-import com.hanshin.shop.entity.user.User;
+import com.hanshin.shop.vo.user.User;
 import com.hanshin.shop.repository.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

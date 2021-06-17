@@ -1,6 +1,6 @@
 package com.hanshin.shop.repository;
 
-import com.hanshin.shop.entity.cart.CartVO;
+import com.hanshin.shop.vo.cart.CartVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,6 +9,8 @@ import java.util.List;
 public interface CartMapper {
 
     void insert(CartVO cartVO);
+
+    int count(Long userId);
 
     List<CartVO> findAll(long id);
 

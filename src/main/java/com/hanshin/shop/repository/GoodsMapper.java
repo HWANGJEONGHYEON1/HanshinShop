@@ -1,7 +1,7 @@
 package com.hanshin.shop.repository;
 
-import com.hanshin.shop.entity.goods.Goods;
-import com.hanshin.shop.entity.paging.Criteria;
+import com.hanshin.shop.vo.goods.Goods;
+import com.hanshin.shop.vo.paging.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,6 +12,8 @@ public interface GoodsMapper {
     Goods findOne(Long id);
 
     void save(Goods goods);
+
+    Goods findGoodsOne(Long id);
 
     List<Goods> findAllList();
 

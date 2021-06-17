@@ -6,15 +6,17 @@
         return path;
     }
 
+    let data;
     function cartList() {
 
         $.ajax({
-            url: '/member/cart/' + userId,
+            url: '/api/cart/' + userId,
             dataType: 'json',
             type: 'get',
             success: function (result) {
                 let cartArray = [];
                 let cartTotal = 0;
+                data = result;
                 for (let carts in result) {
                     let cart = result[carts];
                     let path = getPath(cart.attachList[0]);
@@ -32,7 +34,7 @@
                             <td class="shoping__cart__quantity">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="${cart.amount}">
+                                        <input id="quantity" type="text" value="${cart.amount}">
                                     </div>
                                 </div>
                             </td>
@@ -55,27 +57,60 @@
     cartList();
 
     $(document).on("click", "#deleteBtn", function(e) {
-
+        
         let cartId = $(this).data("id");
         $.ajax({
-            url: "/member/cart/" + cartId,
+            url: "/api/cart/" + cartId,
             method: "delete",
             dataType: "text",
             success: function () {
                 cartList();
             }
         })
-    })
+    });
+
 
     $("#deleteAllBtn").on("click", function(e) {
-        console.log("deleteAll");
+        if (data.length == 0) {
+            alert("삭제할 상품이 없습니다.");
+            return;
+        }
+
         $.ajax({
-            url: "/member/carts/" + userId,
+            url: "/api/carts/" + userId,
             method: "delete",
             dataType: "text",
             success: function (result) {
                 alert("전체삭제 되었습니다.");
                 location.href="/";
+            }
+        });
+    });
+
+    $("#orderBtn").on("click", function(e) {
+
+        let param = [];
+        for (let info in data) {
+            let orderInfo = {
+                "goodsId" : data[info].goodsId,
+                "price" : data[info].price,
+                "amount" : data[info].amount
+            }
+            param.push(orderInfo);
+        };
+
+        console.log("# api");
+        console.log(param);
+        $.ajax({
+            url: "/api/order",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(param),
+            dataType: "text",
+            success: function (result) {
+                console.log(result);
+                alert("주문 되었습니다.");
+                location.href="/member/order"
             }
         });
     })

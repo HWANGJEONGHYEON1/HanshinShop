@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanshin.shop.repository.OrderMapper">
+    <resultMap id="attachMap" type="com.hanshin.shop.vo.goods.GoodsAttachVO">
+        <result property="uuid" column="uuid" />
+        <result property="uploadPath" column="upload_path" />
+        <result property="fileName" column="file_name" />
+        <result property="goodsId" column="goods_id" />
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into orders (user_id, address, state )
+        values (#{userId}, #{address}, #{state})
+    </insert>
+
+    <resultMap id="orderMap" type="com.hanshin.shop.vo.order.OrderVO">
+        <id property="id" column="id"/>
+        <id property="userId" column="user_id" />
+        <id property="address" column="address" javaType="java.lang.String"/>
+        <id property="state" column="state"/>
+        <id property="comment" column="comment"/>
+        <id property="orderDate" column="order_date"/>
+    </resultMap>
+
+    <insert id="insertOrderGoods">
+        insert into order_goods (order_id, goods_id, order_price, amount)
+        values (#{orderId}, #{goodsId}, #{orderPrice}, #{amount})
+    </insert>
+
+    <update id="cancel" parameterType="com.hanshin.shop.vo.order.OrderVO">
+        update orders
+        set state = #{state}
+        where id = #{id}
+    </update>
+
+    <select id="selectOrderGoods" resultType="com.hanshin.shop.vo.order.OrderGoodsVO">
+        select id, goods_id, order_id, order_price, amount
+        from order_goods
+        where id = #{id}
+    </select>
+
+    <select id="selectByUserId" resultType="com.hanshin.shop.vo.order.OrderVO">
+        select id, user_id, address, state, order_date
+        from orders
+        where user_id = #{userId}
+    </select>
+
+    <select id="findOrderDetails" resultType="com.hanshin.shop.vo.order.OrderDetailDto">
+        select a.uuid, a.upload_path, a.file_name, g.name, og.order_price, og.amount, o.address, o.state, o.order_date
+        from order_goods og
+                 join orders o on og.order_id = o.id
+                 join attach a on og.goods_id = a.goods_id
+                 join goods g on og.goods_id = g.id
+        where user_id = #{userId}
+    </select>
+
+    <select id="orderCount" resultType="int">
+        select count(*)
+        from order_goods og
+                 join orders o on og.order_id = o.id
+            join attach a on og.goods_id = a.goods_id
+            join goods g on og.goods_id = g.id
+        where user_id = #{userId}
+    </select>
+
+</mapper>

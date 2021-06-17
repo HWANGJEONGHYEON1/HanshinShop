@@ -1,0 +1,71 @@
+{{>layout/header}}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>주문 현황</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/">Home</a>
+                            <span>주문 상품</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-order spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <input type="hidden">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">주문상품</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Address</th>
+                                    <th>주문 일시</th>
+                                    <th>주문 상태</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a id="orderCancelBtn" class="primary-btn cart-btn cart-btn-right">
+                            주문 취소</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__continue">
+                        <div class="shoping__discount">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <h5>Cart Total</h5>
+                    <ul>
+                        <li>Total <span id="totalPrice">0</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shoping Cart Section End -->
+{{>layout/footer}}
+<script src="/js/order.js"></script>

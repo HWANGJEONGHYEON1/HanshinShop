@@ -9,7 +9,7 @@
 
         if ($("#goodsCategoryId").val()) {
             $.ajax({
-                url: '/goods-detail/category/' + $("#goodsCategoryId").val(),
+                url: '/api/goods/detail/category/' + $("#goodsCategoryId").val(),
                 dataType: 'json',
                 type: 'get',
                 success: function (result) {

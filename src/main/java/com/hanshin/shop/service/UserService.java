@@ -1,16 +1,18 @@
 package com.hanshin.shop.service;
 
 import com.hanshin.shop.controller.user.dto.UserDto;
-import com.hanshin.shop.entity.user.User;
+import com.hanshin.shop.vo.user.User;
 import com.hanshin.shop.repository.UserMapper;
-import com.hanshin.shop.entity.user.RoleType;
-import com.hanshin.shop.entity.user.UserRole;
+import com.hanshin.shop.vo.user.RoleType;
+import com.hanshin.shop.vo.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserMapper mapper;
@@ -20,6 +22,7 @@ public class UserService {
         return mapper.isExistEmail(email) >= 1;
     }
 
+    @Transactional
     public User signUp(UserDto user) {
         if (isExist(user.getEmail())) {
             throw new RuntimeException("이미 가입되어있는 유저입니다.");
@@ -35,7 +38,7 @@ public class UserService {
                 .email(user.getEmail())
                 .password(bCryptPasswordEncoder.encode(user.getPassword()))
                 .name(user.getName())
-                .addr(user.getAddr())
+                .address(user.getAddress())
                 .account(user.getAccount())
                 .birth(user.getBirth())
                 .tel(user.getTel())
