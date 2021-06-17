@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hanshin.shop.repository.CartMapper">
-    <resultMap id="cartMap" type="com.hanshin.shop.entity.cart.CartVO">
+    <resultMap id="cartMap" type="com.hanshin.shop.vo.cart.CartVO">
         <id property="id" column="id" />
         <id property="userId" column="user_id" />
         <id property="goodsId" column="goods_id" />
@@ -13,12 +13,18 @@
         <collection property="attachList" resultMap="attachMap"></collection>
     </resultMap>
 
-    <resultMap id="attachMap" type="com.hanshin.shop.entity.goods.GoodsAttachVO">
+    <resultMap id="attachMap" type="com.hanshin.shop.vo.goods.GoodsAttachVO">
         <result property="uuid" column="uuid" />
         <result property="uploadPath" column="upload_path" />
         <result property="fileName" column="file_name" />
         <result property="goodsId" column="goods_id" />
     </resultMap>
+
+    <select id="count" resultType="int">
+        select count(*)
+        from cart
+        where user_id = #{userId}
+    </select>
 
     <delete id="delete">
         delete from cart where id = #{id}
@@ -33,7 +39,7 @@
         values(#{goodsId}, #{amount}, #{userId})
     </insert>
 
-    <select id="isExistCartOne" resultType="com.hanshin.shop.entity.cart.CartVO">
+    <select id="isExistCartOne" resultType="com.hanshin.shop.vo.cart.CartVO">
         select id, goods_id, user_id, amount
         from cart
         where goods_id = #{goodsId} and user_id = #{userId}

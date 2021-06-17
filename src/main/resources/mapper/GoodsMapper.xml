@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hanshin.shop.repository.GoodsMapper">
-    <resultMap id="goodsMap" type="com.hanshin.shop.entity.goods.Goods">
+    <resultMap id="goodsMap" type="com.hanshin.shop.vo.goods.Goods">
         <id property="id" column="id" />
         <id property="name" column="name" />
         <id property="categoryId" column="category_id" />
@@ -15,7 +15,7 @@
         <collection property="attachList" resultMap="attachMap"></collection>
     </resultMap>
 
-    <resultMap id="attachMap" type="com.hanshin.shop.entity.goods.GoodsAttachVO">
+    <resultMap id="attachMap" type="com.hanshin.shop.vo.goods.GoodsAttachVO">
         <result property="uuid" column="uuid" />
         <result property="uploadPath" column="upload_path" />
         <result property="fileName" column="file_name" />
@@ -27,18 +27,18 @@
         values( #{name}, #{price}, #{description}, #{categoryId})
     </insert>
 
-    <select id="findOne" resultType="com.hanshin.shop.entity.goods.Goods">
+    <select id="findOne" resultType="com.hanshin.shop.vo.goods.Goods">
         <include refid="all"></include>
         where goods.id = #{id}
     </select>
 
-    <select id="findGoodsOne" resultType="com.hanshin.shop.entity.goods.Goods">
+    <select id="findGoodsOne" resultType="com.hanshin.shop.vo.goods.Goods">
         select id, name, price, description, review_count, discount_rate, reg_date
         from goods
         where id = #{id}
     </select>
 
-    <select id="findAll" resultType="com.hanshin.shop.entity.goods.Goods">
+    <select id="findAll" resultType="com.hanshin.shop.vo.goods.Goods">
         select id, name, price, description, review_count, discount_rate, reg_date
         from goods
     </select>
