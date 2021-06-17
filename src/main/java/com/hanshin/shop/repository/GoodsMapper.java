@@ -1,6 +1,6 @@
 package com.hanshin.shop.repository;
 
-import com.hanshin.shop.entity.goods.Goods;
+import com.hanshin.shop.vo.goods.Goods;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,10 +1,10 @@
 package com.hanshin.shop.service;
 
 import com.hanshin.shop.controller.user.dto.UserDto;
-import com.hanshin.shop.entity.user.User;
+import com.hanshin.shop.vo.user.User;
 import com.hanshin.shop.repository.UserMapper;
-import com.hanshin.shop.entity.user.RoleType;
-import com.hanshin.shop.entity.user.UserRole;
+import com.hanshin.shop.vo.user.RoleType;
+import com.hanshin.shop.vo.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

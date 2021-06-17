@@ -1,6 +1,6 @@
 package com.hanshin.shop.service;
 
-import com.hanshin.shop.entity.cart.CartVO;
+import com.hanshin.shop.vo.cart.CartVO;
 import com.hanshin.shop.repository.CartMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +29,10 @@ public class CartService {
             log.info("existVO {}", existCartVO);
             cartMapper.update(cartVO.getAmount(), existCartVO.getId());
         }
+    }
+
+    public int count(Long userId) {
+        return cartMapper.count(userId);
     }
 
     public List<CartVO> findAll(Long userId) {

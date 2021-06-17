@@ -1,15 +1,9 @@
 package com.hanshin.shop.service;
 
-import com.hanshin.shop.entity.goods.Goods;
-import com.hanshin.shop.entity.order.OrderDetailDto;
-import com.hanshin.shop.entity.order.OrderDto;
-import com.hanshin.shop.entity.order.OrderGoodsVO;
-import com.hanshin.shop.entity.order.OrderVO;
-import com.hanshin.shop.entity.user.User;
+import com.hanshin.shop.vo.order.*;
+import com.hanshin.shop.vo.user.User;
 import com.hanshin.shop.repository.CartMapper;
-import com.hanshin.shop.repository.GoodsMapper;
 import com.hanshin.shop.repository.OrderMapper;
-import com.hanshin.shop.repository.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,13 +20,14 @@ import java.util.Objects;
 public class OrderService {
 
     private final OrderMapper orderMapper;
-    private final GoodsMapper goodsMapper;
-    private final UserMapper userMapper;
     private final CartMapper cartMapper;
 
-    public OrderVO findOne(Long id) {
-        final OrderVO one = orderMapper.selectOne(id);
-        return one;
+    public OrderVO selectByUserId(Long userId) {
+        return orderMapper.selectByUserId(userId);
+    }
+
+    public int orderCount(Long userId) {
+        return orderMapper.orderCount(userId);
     }
 
     public List<OrderDetailDto> findOrderDetails(Long userId) {
@@ -40,33 +35,32 @@ public class OrderService {
     }
 
     @Transactional
-    public Long insert(List<OrderDto> orderDtoList, Long userId) {
-        final User user = userMapper.findById(userId);
+    public void insert(List<OrderDto> orderDtoList, User user) {
+
         List<OrderGoodsVO> orderGoodsVOList = new ArrayList<>();
 
-        for (OrderDto dto : orderDtoList) {
-            final Goods goods = goodsMapper.findGoodsOne(dto.getGoodsId());
-            OrderGoodsVO orderGoodsVO = OrderGoodsVO.createOrderGoods(goods.getId(), goods.getPrice(), dto.getAmount());
-            orderGoodsVOList.add(orderGoodsVO);
-        }
+        orderDtoList.stream()
+                .map(OrderGoodsVO::createOrderGoods)
+                .forEach(orderGoodsVO -> orderGoodsVOList.add(orderGoodsVO));
+
         OrderVO order = OrderVO.createOrder(user.getId(), user.getAddress(), orderGoodsVOList);
         orderMapper.insert(order);
-        cartMapper.deleteAll(userId);
         saveOrderGoodsItem(orderGoodsVOList, order);
+
+        cartMapper.deleteAll(user.getId());
 
         if (Objects.isNull(order.getId())) {
             throw new IllegalStateException("주문이 완료되지 않았습니다.");
         }
-
-        return order.getId();
     }
 
     @Transactional
-    public int orderCancel(Long userId) {
-        OrderVO orderVO = orderMapper.selectOne(userId);
+    public void orderCancel(Long userId) {
+        OrderVO orderVO = orderMapper.selectByUserId(userId);
+        if (orderVO.getState() == OrderStatus.CANCEL) {
+            throw new IllegalStateException("이미 주문 취소 되었습니다.");
+        }
         orderVO.cancel();
-        log.info("# orderVO {}", orderVO);
-        return orderMapper.cancel(orderVO.getId(), orderVO.getState());
     }
 
     private void saveOrderGoodsItem(List<OrderGoodsVO> orderGoodsVOList, OrderVO order) {

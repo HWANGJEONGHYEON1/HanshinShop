@@ -1,9 +1,9 @@
 package com.hanshin.shop.repository;
 
-import com.hanshin.shop.entity.order.OrderDetailDto;
-import com.hanshin.shop.entity.order.OrderGoodsVO;
-import com.hanshin.shop.entity.order.OrderStatus;
-import com.hanshin.shop.entity.order.OrderVO;
+import com.hanshin.shop.vo.order.OrderDetailDto;
+import com.hanshin.shop.vo.order.OrderGoodsVO;
+import com.hanshin.shop.vo.order.OrderStatus;
+import com.hanshin.shop.vo.order.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,9 +16,13 @@ public interface OrderMapper {
 
     void insertOrderGoods(OrderGoodsVO orderGoodsVO);
 
-    OrderVO selectOne(Long id);
 
-    int cancel(@Param("id") Long id, @Param("state") OrderStatus orderStatus);
+    OrderVO selectByUserId(Long userId);
+
+//    int cancel(@Param("id") Long id, @Param("state") OrderStatus orderStatus);
+    int cancel(OrderVO orderVO);
 
     List<OrderDetailDto> findOrderDetails(Long userId);
+
+    int orderCount(Long userId);
 }

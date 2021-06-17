@@ -1,6 +1,6 @@
 package com.hanshin.shop.service;
 
-import com.hanshin.shop.entity.goods.Goods;
+import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.repository.GoodsAttachMapper;
 import com.hanshin.shop.repository.GoodsMapper;
 import lombok.RequiredArgsConstructor;
@@ -46,19 +46,17 @@ public class GoodsService {
         return goodsMapper.findOne(goodsId);
     }
 
-    public List<Goods> findListOfCategory(Long categoryId) {
+    public List<Goods> findListOfCategory(Long categoryId, boolean isRelated) {
+        if (isRelated) {
+            return getShuffleList(goodsMapper.findListOfCategory(categoryId));
+        }
         return goodsMapper.findListOfCategory(categoryId);
-    }
-
-    public List<Goods> findListOfRelated(Long categoryId) {
-        final List<Goods> listOfCategory = goodsMapper.findListOfCategory(categoryId);
-        return getShuffleList(listOfCategory);
     }
 
     private List<Goods> getShuffleList(List<Goods> allGoodsList) {
         Collections.shuffle(allGoodsList);
         int limitCount = 4;
-        if (allGoodsList.size() < 4 ) {
+        if (allGoodsList.size() < 4) {
             limitCount = allGoodsList.size();
         }
         log.info("limit {} ", limitCount);
