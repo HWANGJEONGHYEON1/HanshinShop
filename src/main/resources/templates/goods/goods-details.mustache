@@ -163,10 +163,11 @@
         }
 
         $.ajax({
-            url: '/goods-detail/category/' + {{goods.categoryId}},
+            url: '/api/goods/detail/category/' + {{goods.categoryId}},
             dataType: 'json',
             type: 'get',
             success: function (result) {
+                console.log(result);
                 let shopRecommendArray = [];
                 shopRecommendArray.push(`<div class="categories__slider owl-carousel">`)
                 for (let product in result) {
