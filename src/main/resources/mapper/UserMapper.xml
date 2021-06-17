@@ -38,6 +38,7 @@
         where email = #{email}
     </select>
 
+
     <insert id="signUp">
         insert into user (password, name, tel, address, email, birth, account)
         values( #{password}, #{name}, #{tel}, #{address}, #{email}, #{birth}, #{account})

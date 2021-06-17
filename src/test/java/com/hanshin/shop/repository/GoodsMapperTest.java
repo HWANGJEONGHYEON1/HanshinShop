@@ -1,6 +1,7 @@
 package com.hanshin.shop.repository;
 
 import com.hanshin.shop.vo.goods.Goods;
+import com.hanshin.shop.vo.paging.Criteria;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 
@@ -47,6 +48,21 @@ class GoodsMapperTest {
 
         //then
         Assertions.assertThat(goods.getName()).isEqualTo("피망");
+    }
+
+
+    @Test
+    public void testPaging() throws Exception {
+        //given
+        Criteria criteria = new Criteria(3, 10);
+
+        List<Goods> list = mapper.getListWithPaging(criteria);
+
+        Assertions.assertThat(list.size()).isEqualTo(10);
+
+        //when
+
+        //then
     }
 
 }

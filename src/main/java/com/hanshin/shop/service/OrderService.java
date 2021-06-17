@@ -61,6 +61,7 @@ public class OrderService {
             throw new IllegalStateException("이미 주문 취소 되었습니다.");
         }
         orderVO.cancel();
+        orderMapper.cancel(orderVO);
     }
 
     private void saveOrderGoodsItem(List<OrderGoodsVO> orderGoodsVOList, OrderVO order) {

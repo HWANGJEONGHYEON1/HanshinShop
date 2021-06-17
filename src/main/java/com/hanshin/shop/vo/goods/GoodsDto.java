@@ -14,4 +14,5 @@ public class GoodsDto {
     private String description;
 
     private Long categoryId;
+
 }

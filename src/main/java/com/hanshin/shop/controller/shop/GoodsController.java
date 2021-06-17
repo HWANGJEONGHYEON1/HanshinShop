@@ -2,6 +2,8 @@ package com.hanshin.shop.controller.shop;
 
 import com.hanshin.shop.vo.goods.CategoryVO;
 import com.hanshin.shop.vo.goods.Goods;
+import com.hanshin.shop.vo.paging.Criteria;
+import com.hanshin.shop.vo.paging.PageDto;
 import com.hanshin.shop.repository.CategoryMapper;
 import com.hanshin.shop.service.GoodsService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -34,16 +38,15 @@ public class GoodsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping("/main")
-//    public ResponseEntity<List<Goods>> list() {
-//        return new ResponseEntity<>(goodsService.findAllList(), HttpStatus.OK);
-//    }
-
     @GetMapping("/main")
-    public List<Goods> list() {
-        return goodsService.findAllList();
-    }
+    public ResponseEntity<Map<String, Object>> list(Criteria cri) {
+        Map<String, Object> map = new HashMap<>();
+        final List<Goods> goodsAll = goodsService.findAllList(cri);
+        map.put("goodsAll", goodsAll);
+        map.put("pageMaker", new PageDto(123, cri));
+        return new ResponseEntity<>(map, HttpStatus.OK);
 
+    }
 
     @GetMapping("/recommend")
     public List<Goods> recommendList() {

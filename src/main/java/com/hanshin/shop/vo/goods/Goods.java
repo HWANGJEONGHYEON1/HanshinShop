@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
