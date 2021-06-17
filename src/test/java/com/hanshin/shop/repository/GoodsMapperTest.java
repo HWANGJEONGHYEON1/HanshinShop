@@ -1,7 +1,6 @@
 package com.hanshin.shop.repository;
 
-import com.hanshin.shop.entity.goods.Goods;
-import com.hanshin.shop.entity.goods.GoodsDto;
+import com.hanshin.shop.vo.goods.Goods;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 
@@ -36,7 +35,7 @@ class GoodsMapperTest {
         final List<Goods> listOfCategory = mapper.findListOfCategory(2L);
 
         //then
-        Assertions.assertThat(listOfCategory.size()).isEqualTo(5);
+        Assertions.assertThat(listOfCategory.size()).isEqualTo(30);
     }
 
 

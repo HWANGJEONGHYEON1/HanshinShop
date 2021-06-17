@@ -1,14 +1,12 @@
 package com.hanshin.shop.service;
 
-import com.hanshin.shop.entity.goods.Goods;
-import com.hanshin.shop.entity.goods.GoodsDto;
+import com.hanshin.shop.vo.goods.Goods;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

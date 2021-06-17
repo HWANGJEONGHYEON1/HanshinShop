@@ -1,9 +1,11 @@
 package com.hanshin.shop.service;
 
-import com.hanshin.shop.entity.goods.Goods;
-import com.hanshin.shop.entity.goods.GoodsDto;
-import com.hanshin.shop.entity.order.*;
+import com.hanshin.shop.vo.goods.Goods;
+import com.hanshin.shop.vo.goods.GoodsDto;
+import com.hanshin.shop.vo.order.*;
+import com.hanshin.shop.vo.user.User;
 import com.hanshin.shop.repository.GoodsMapper;
+import com.hanshin.shop.repository.UserMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -25,20 +25,25 @@ class OrderServiceTest {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     Long testUserId = 21L;
 
     @Test
     public void 상품주문() throws Exception {
 
         final Long goodsId = createGoods();
-        OrderDto dto = new OrderDto(goodsId, 1);
+
+        OrderDto dto = new OrderDto(goodsId, 1000, 1);
         List<OrderDto> dtoList = Arrays.asList(dto);
+
+        final User user = userMapper.findById(18L);
         //when
-        final Long insertId = orderService.insert(dtoList, 1L);
-        final OrderVO orderedVO = orderService.findOne(insertId);
+        orderService.insert(dtoList, user);
+        final OrderVO orderedVO = orderService.selectByUserId(18L);
         //then
         Assertions.assertThat(OrderStatus.ORDER).isEqualTo(orderedVO.getState());
-        Assertions.assertThat("suwon").isEqualTo(orderedVO.getAddress());
 
     }
 
@@ -52,9 +57,9 @@ class OrderServiceTest {
     @Test
     public void 주문조회() throws Exception {
         //given
-        Long id = 19L;
+        Long id = 22L;
         //when
-        final OrderVO one = orderService.findOne(id);
+        final OrderVO one = orderService.selectByUserId(id);
 
         //then
         Assertions.assertThat(one.getState()).isEqualTo(OrderStatus.ORDER);
@@ -69,17 +74,25 @@ class OrderServiceTest {
         //then
 
         Assertions.assertThat(orderDetails.size()).isEqualTo(2);
-        Assertions.assertThat(orderDetails.get(0).getState()).isEqualTo(OrderStatus.ORDER);
+        Assertions.assertThat(orderDetails.get(0).getState()).isEqualTo(OrderStatus.CANCEL);
+    }
+
+
+    @Test
+    public void 주문취소_예외() throws Exception {
+        Assertions.assertThatThrownBy(() -> orderService.orderCancel(21L))
+                .isInstanceOf(IllegalStateException.class);
     }
 
 
     @Test
     public void 주문취소() throws Exception {
+        //given
+        final OrderVO one = orderService.selectByUserId(22L);
         //when
-        final int updateData = orderService.orderCancel(testUserId);
+        orderService.orderCancel(22L);
         //then
-        Assertions.assertThat(updateData).isEqualTo(1);
-
+        Assertions.assertThat(one.getState()).isEqualTo(OrderStatus.CANCEL);
     }
 
 }
