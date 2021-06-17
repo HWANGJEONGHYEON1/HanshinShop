@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity.user;
+package com.hanshin.shop.vo.user;
 
 public enum RoleType {
     ROLE_ADMIN,

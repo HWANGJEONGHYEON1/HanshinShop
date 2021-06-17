@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity.cart;
+package com.hanshin.shop.vo.cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

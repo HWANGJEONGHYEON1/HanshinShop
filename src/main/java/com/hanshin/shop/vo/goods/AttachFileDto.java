@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity.goods;
+package com.hanshin.shop.vo.goods;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

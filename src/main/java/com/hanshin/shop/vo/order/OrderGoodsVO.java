@@ -1,11 +1,11 @@
-package com.hanshin.shop.entity.order;
+package com.hanshin.shop.vo.order;
 
-import com.hanshin.shop.entity.goods.Goods;
 import lombok.*;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@ToString
 //@RequiredArgsConstructor(staticName = "of")
 public class OrderGoodsVO {
 
@@ -19,11 +19,11 @@ public class OrderGoodsVO {
 
     private int amount;
 
-    public static OrderGoodsVO createOrderGoods(Long goodsId, int orderPrice, int count) {
+    public static OrderGoodsVO createOrderGoods(OrderDto orderDto) {
         return OrderGoodsVO.builder()
-                .goodsId(goodsId)
-                .orderPrice(orderPrice)
-                .amount(count)
+                .goodsId(orderDto.getGoodsId())
+                .orderPrice(orderDto.getPrice())
+                .amount(orderDto.getAmount())
                 .build();
     }
 

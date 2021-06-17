@@ -1,6 +1,6 @@
-package com.hanshin.shop.entity.cart;
+package com.hanshin.shop.vo.cart;
 
-import com.hanshin.shop.entity.goods.GoodsAttachVO;
+import com.hanshin.shop.vo.goods.GoodsAttachVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

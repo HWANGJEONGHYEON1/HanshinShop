@@ -1,9 +1,6 @@
-package com.hanshin.shop.entity.order;
+package com.hanshin.shop.vo.order;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +8,7 @@ import java.util.List;
 @Builder
 @Getter
 @AllArgsConstructor
+@ToString
 @NoArgsConstructor
 public class OrderVO {
 

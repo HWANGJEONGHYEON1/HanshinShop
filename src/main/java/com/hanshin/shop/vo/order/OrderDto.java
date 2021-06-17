@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity.order;
+package com.hanshin.shop.vo.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,7 @@ import lombok.ToString;
 public class OrderDto {
 
     private Long goodsId;
+    private int price;
     private int amount;
 
 }

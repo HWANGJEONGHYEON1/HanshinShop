@@ -1,4 +1,4 @@
-package com.hanshin.shop.entity.user;
+package com.hanshin.shop.vo.user;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

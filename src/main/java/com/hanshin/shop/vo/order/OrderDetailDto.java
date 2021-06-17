@@ -1,11 +1,9 @@
-package com.hanshin.shop.entity.order;
+package com.hanshin.shop.vo.order;
 
 import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Getter
 @ToString
