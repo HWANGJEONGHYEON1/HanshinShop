@@ -10,7 +10,7 @@
     function cartList() {
 
         $.ajax({
-            url: '/member/cart/' + userId,
+            url: '/api/cart/' + userId,
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -60,7 +60,7 @@
         
         let cartId = $(this).data("id");
         $.ajax({
-            url: "/member/cart/" + cartId,
+            url: "/api/cart/" + cartId,
             method: "delete",
             dataType: "text",
             success: function () {
@@ -77,7 +77,7 @@
         }
 
         $.ajax({
-            url: "/member/carts/" + userId,
+            url: "/api/carts/" + userId,
             method: "delete",
             dataType: "text",
             success: function (result) {
@@ -93,12 +93,16 @@
         for (let info in data) {
             let orderInfo = {
                 "goodsId" : data[info].goodsId,
+                "price" : data[info].price,
                 "amount" : data[info].amount
             }
             param.push(orderInfo);
-        }
+        };
+
+        console.log("# api");
+        console.log(param);
         $.ajax({
-            url: "/member/order/",
+            url: "/api/order",
             method: "POST",
             contentType: 'application/json',
             data: JSON.stringify(param),

@@ -228,7 +228,7 @@
     $("#categories").on("click", "li", function(){
         let id = $(this).attr("id");
         $.ajax({
-            url: "/goods/category/" + id,
+            url: "/api/category/" + id,
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -277,7 +277,7 @@
 
     function initOrderCount() {
         $.ajax({
-            url: "/member/orderCount/",
+            url: "/api/order/count",
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -290,7 +290,7 @@
 
     function initCartCount(userId) {
         $.ajax({
-            url: "/member/cartCount/" + userId,
+            url: "/api/cart/count/" + userId,
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -302,7 +302,7 @@
 
     function initCategory() {
         $.ajax({
-            url: '/goods/categories',
+            url: '/api/categories',
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -318,7 +318,7 @@
 
     function initMainShop() {
         $.ajax({
-            url: '/goods/main',
+            url: '/api/main',
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -329,7 +329,7 @@
 
     function initMainRecommend() {
         $.ajax({
-            url: '/goods/recommend',
+            url: '/api/recommend',
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -404,7 +404,7 @@
         };
 
         $.ajax({
-            url: '/member/cart/' + userId,
+            url: '/api/cart/' + userId,
             dataType: 'text',
             contentType: 'application/json',
             data: JSON.stringify(data),

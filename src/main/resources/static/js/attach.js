@@ -96,7 +96,7 @@
             };
 
             $.ajax({
-                url : '/goods/new',
+                url : '/api/goods/new',
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 dataType: 'text',

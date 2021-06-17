@@ -14,7 +14,7 @@
     let data;
     function orderList() {
         $.ajax({
-            url: '/member/order-details',
+            url: '/api/order/details',
             dataType: 'json',
             type: 'get',
             success: function (result) {
@@ -63,7 +63,7 @@
     $("#orderCancelBtn").on("click", function(e) {
         console.log("## orederCancel btn click");
         $.ajax({
-            url: '/member/order/cancel',
+            url: '/api/order/cancel',
             method: "patch",
             dataType: 'text',
             success: function (result) {
