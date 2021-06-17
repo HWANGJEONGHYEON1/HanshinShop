@@ -1,6 +1,6 @@
 package com.hanshin.shop.controller.file;
 
-import com.hanshin.shop.entity.goods.AttachFileDto;
+import com.hanshin.shop.vo.goods.AttachFileDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,14 +33,14 @@ public class UploadController {
     private static final String uploadFolder = "/Users/hwangjeonghyeon/IdeaProjects/HanshinShop/src/main/resources/static/img/";
 
     @PostMapping("/deleteFile")
-    public ResponseEntity<String> deleteFile(String fileName) throws UnsupportedEncodingException {
+    public ResponseEntity<Void> deleteFile(String fileName) throws UnsupportedEncodingException {
         log.info("fileName {}", fileName);
 
         File file;
         file = new File(uploadFolder + URLDecoder.decode(fileName, "UTF-8"));
         file.delete();
 
-        return new ResponseEntity<>("deleted", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/display")

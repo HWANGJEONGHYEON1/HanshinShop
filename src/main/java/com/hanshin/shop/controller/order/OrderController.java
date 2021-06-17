@@ -1,70 +1,51 @@
 package com.hanshin.shop.controller.order;
 
-import com.hanshin.shop.entity.order.OrderDetailDto;
-import com.hanshin.shop.entity.order.OrderDto;
-import com.hanshin.shop.entity.user.LoginUser;
-import com.hanshin.shop.entity.user.User;
+import com.hanshin.shop.vo.order.OrderDetailDto;
+import com.hanshin.shop.vo.order.OrderDto;
+import com.hanshin.shop.vo.user.LoginUser;
+import com.hanshin.shop.vo.user.User;
 import com.hanshin.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/api")
 @PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
 public class OrderController {
 
     private final OrderService orderService;
 
-    @GetMapping("/order")
-    public String shopDetail() {
-        return "order/order-goods";
-    }
-
-    @GetMapping("/orderCount")
-    @ResponseBody
+    @GetMapping("/order/count")
     public int count(@LoginUser User user) {
-        final List<OrderDetailDto> orderDetails = orderService.findOrderDetails(user.getId());
-        return orderDetails.size();
+        return orderService.orderCount(user.getId());
     }
 
     @PostMapping("/order")
-    @ResponseBody
-    public ResponseEntity<String> order(@RequestBody List<OrderDto> dtoList, @LoginUser User user) {
-        log.info("dto {} ", dtoList);
-        orderService.insert(dtoList, user.getId());
-
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+    public ResponseEntity<Void> order(@RequestBody List<OrderDto> dtoList, @LoginUser User user) {
+        orderService.insert(dtoList, user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/order-details")
-    @ResponseBody
-    public ResponseEntity<List<OrderDetailDto>> orderDetails(@LoginUser User user) {
+    @GetMapping("/order/details")
+    public List<OrderDetailDto> orderDetails(@LoginUser User user) {
         Long userId = user.getId();
         final List<OrderDetailDto> orderDetails = orderService.findOrderDetails(userId);
         log.info("orderDetails : " + orderDetails);
-        return new ResponseEntity<>(orderDetails, HttpStatus.OK);
+        return orderDetails;
     }
 
     @PatchMapping("/order/cancel")
-    @ResponseBody
-    public ResponseEntity<String> cancel(@LoginUser User user) {
-        log.info("patchMapping");
-        final int updateCount = orderService.orderCancel(user.getId());
-        if (updateCount != 1) {
-            return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        return new ResponseEntity<>("success", HttpStatus.OK);
-
+    public ResponseEntity<Void> cancel(@LoginUser User user) {
+        orderService.orderCancel(user.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

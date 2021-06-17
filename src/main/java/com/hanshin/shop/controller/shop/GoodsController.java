@@ -1,40 +1,28 @@
 package com.hanshin.shop.controller.shop;
 
-import com.hanshin.shop.entity.goods.CategoryVO;
-import com.hanshin.shop.entity.goods.Goods;
-import com.hanshin.shop.entity.user.LoginUser;
-import com.hanshin.shop.entity.user.User;
+import com.hanshin.shop.vo.goods.CategoryVO;
+import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.repository.CategoryMapper;
-import com.hanshin.shop.repository.GoodsAttachMapper;
 import com.hanshin.shop.service.GoodsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/goods")
+@RequestMapping("/api")
 public class GoodsController {
 
     private final GoodsService goodsService;
     private final CategoryMapper categoryMapper;
 
-    @GetMapping("/new")
-    public String registerForm() {
-        return "goods/createProduct";
-    }
-
-    @PostMapping("/new")
-    @ResponseBody
-    public ResponseEntity<String> register(@RequestBody Goods goods) {
-        log.info("# register {}" + goods);
+    @PostMapping("/goods/new")
+    public ResponseEntity<Void> register(@RequestBody Goods goods) {
 
         if (goods.getAttachList() != null) {
             goods.getAttachList()
@@ -43,32 +31,38 @@ public class GoodsController {
 
         goodsService.save(goods);
 
-        return new ResponseEntity<>("CREATED", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    @GetMapping("/main")
+//    public ResponseEntity<List<Goods>> list() {
+//        return new ResponseEntity<>(goodsService.findAllList(), HttpStatus.OK);
+//    }
 
     @GetMapping("/main")
-    @ResponseBody
-    public ResponseEntity<List<Goods>> list() {
-        final List<Goods> goodsAll = goodsService.findAllList();
-        return new ResponseEntity<>(goodsAll, HttpStatus.OK);
+    public List<Goods> list() {
+        return goodsService.findAllList();
     }
 
+
     @GetMapping("/recommend")
-    @ResponseBody
-    public ResponseEntity<List<Goods>> recommendList() {
-        return new ResponseEntity<>(goodsService.findRecommendGoods(), HttpStatus.OK);
+    public List<Goods> recommendList() {
+        return goodsService.findRecommendGoods();
     }
 
     @GetMapping("/categories")
-    @ResponseBody
-    public ResponseEntity<List<CategoryVO>> categories() {
-        return new ResponseEntity<>(categoryMapper.list(), HttpStatus.OK);
+    public List<CategoryVO> categories() {
+        return categoryMapper.list();
     }
 
     @GetMapping("/category/{id}")
-    @ResponseBody
-    public ResponseEntity<List<Goods>> categories(@PathVariable Long id) {
-        return new ResponseEntity<>(goodsService.findListOfCategory(id), HttpStatus.OK);
+    public List<Goods> categories(@PathVariable Long id) {
+        return goodsService.findListOfCategory(id, false);
+    }
+
+    @GetMapping("/goods/detail/category/{id}")
+    public List<Goods> relatedCategoryGoods(@PathVariable Long id) {
+        return goodsService.findListOfCategory(id, true);
     }
 
 }

@@ -2,7 +2,7 @@ package com.hanshin.shop.controller.user.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hanshin.shop.entity.user.UserRole;
+import com.hanshin.shop.vo.user.UserRole;
 import com.sun.istack.NotNull;
 import lombok.*;
 
