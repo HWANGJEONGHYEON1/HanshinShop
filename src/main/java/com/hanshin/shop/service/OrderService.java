@@ -24,7 +24,7 @@ public class OrderService {
     private final CartMapper cartMapper;
 
     public OrderVO selectByUserId(Long userId) {
-        return orderMapper.selectByUserId(userId);
+        return orderMapper.selectByOrderId(userId);
     }
 
     public int orderCount(Long userId) {
@@ -54,8 +54,8 @@ public class OrderService {
     }
 
     @Transactional
-    public void orderCancel(Long userId) {
-        OrderVO orderVO = orderMapper.selectByUserId(userId);
+    public void orderCancel(Long orderId) {
+        OrderVO orderVO = orderMapper.selectByOrderId(orderId);
         if (orderVO.getState() == OrderStatus.CANCEL) {
             throw new IllegalStateException("이미 주문 취소 되었습니다.");
         }
