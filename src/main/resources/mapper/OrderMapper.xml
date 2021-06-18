@@ -42,7 +42,7 @@
         where id = #{id}
     </select>
 
-    <select id="selectByUserId" resultType="com.hanshin.shop.vo.order.OrderVO">
+    <select id="selectByOrderId" resultType="com.hanshin.shop.vo.order.OrderVO">
         select id, user_id, address, state, order_date
         from orders
         where id = #{id}
