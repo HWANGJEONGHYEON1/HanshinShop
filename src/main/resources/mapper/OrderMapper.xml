@@ -35,6 +35,7 @@
         where id = #{id}
     </update>
 
+
     <select id="selectOrderGoods" resultType="com.hanshin.shop.vo.order.OrderGoodsVO">
         select id, goods_id, order_id, order_price, amount
         from order_goods
@@ -44,11 +45,11 @@
     <select id="selectByUserId" resultType="com.hanshin.shop.vo.order.OrderVO">
         select id, user_id, address, state, order_date
         from orders
-        where user_id = #{userId}
+        where id = #{id}
     </select>
 
     <select id="findOrderDetails" resultType="com.hanshin.shop.vo.order.OrderDetailDto">
-        select a.uuid, a.upload_path, a.file_name, g.name, og.order_price, og.amount, o.address, o.state, o.order_date
+        select o.id, a.uuid, a.upload_path, a.file_name, g.name, og.order_price, og.amount, o.address, o.state, o.order_date
         from order_goods og
                  join orders o on og.order_id = o.id
                  join attach a on og.goods_id = a.goods_id
