@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 public class OrderDetailDto {
-
+    private Long id;
     private String uuid;
     private String uploadPath;
     private String fileName;

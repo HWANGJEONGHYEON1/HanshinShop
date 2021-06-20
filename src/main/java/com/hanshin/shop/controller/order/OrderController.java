@@ -29,9 +29,8 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<Void> order(@RequestBody List<OrderDto> dtoList, @LoginUser User user) {
+    public void order(@RequestBody List<OrderDto> dtoList, @LoginUser User user) {
         orderService.insert(dtoList, user);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/order/details")
@@ -42,10 +41,9 @@ public class OrderController {
         return orderDetails;
     }
 
-    @PatchMapping("/order/cancel")
-    public ResponseEntity<Void> cancel(@LoginUser User user) {
-        orderService.orderCancel(user.getId());
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PatchMapping("/order/cancel/{id}")
+    public void cancel(@PathVariable Long id) {
+        orderService.orderCancel(id);
     }
 
 

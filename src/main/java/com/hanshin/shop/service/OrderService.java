@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,7 +24,7 @@ public class OrderService {
     private final CartMapper cartMapper;
 
     public OrderVO selectByUserId(Long userId) {
-        return orderMapper.selectByUserId(userId);
+        return orderMapper.selectByOrderId(userId);
     }
 
     public int orderCount(Long userId) {
@@ -37,26 +38,24 @@ public class OrderService {
     @Transactional
     public void insert(List<OrderDto> orderDtoList, User user) {
 
-        List<OrderGoodsVO> orderGoodsVOList = new ArrayList<>();
-
-        orderDtoList.stream()
-                .map(OrderGoodsVO::createOrderGoods)
-                .forEach(orderGoodsVO -> orderGoodsVOList.add(orderGoodsVO));
+        List<OrderGoodsVO> orderGoodsVOList = getOrderDtoList(orderDtoList);
 
         OrderVO order = OrderVO.createOrder(user.getId(), user.getAddress(), orderGoodsVOList);
         orderMapper.insert(order);
         saveOrderGoodsItem(orderGoodsVOList, order);
 
         cartMapper.deleteAll(user.getId());
+    }
 
-        if (Objects.isNull(order.getId())) {
-            throw new IllegalStateException("주문이 완료되지 않았습니다.");
-        }
+    private List<OrderGoodsVO> getOrderDtoList(List<OrderDto> orderDtoList) {
+        return orderDtoList.stream()
+                .map(OrderGoodsVO::createOrderGoods)
+                .collect(Collectors.toList());
     }
 
     @Transactional
-    public void orderCancel(Long userId) {
-        OrderVO orderVO = orderMapper.selectByUserId(userId);
+    public void orderCancel(Long orderId) {
+        OrderVO orderVO = orderMapper.selectByOrderId(orderId);
         if (orderVO.getState() == OrderStatus.CANCEL) {
             throw new IllegalStateException("이미 주문 취소 되었습니다.");
         }

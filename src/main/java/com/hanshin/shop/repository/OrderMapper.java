@@ -17,7 +17,7 @@ public interface OrderMapper {
     void insertOrderGoods(OrderGoodsVO orderGoodsVO);
 
 
-    OrderVO selectByUserId(Long userId);
+    OrderVO selectByOrderId(Long orderId);
 
 //    int cancel(@Param("id") Long id, @Param("state") OrderStatus orderStatus);
     int cancel(OrderVO orderVO);
