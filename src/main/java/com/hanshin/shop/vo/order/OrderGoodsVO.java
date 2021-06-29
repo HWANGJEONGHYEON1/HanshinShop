@@ -6,7 +6,6 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @ToString
-//@RequiredArgsConstructor(staticName = "of")
 public class OrderGoodsVO {
 
     private Long id;
