@@ -3,6 +3,7 @@
 ### 기술
 - SpringBoot
 - MyBatis
+- JPA
 - Mysql
 - Git
 - JWT
@@ -23,6 +24,6 @@
 - 장바구니 
 - 주문 구현
 - 페이징 처리 
-- 주문(코드 리팩토링 ~ing)
-
+- 주문
+- Mybatis to JPA(~ing)
 
