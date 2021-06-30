@@ -1,4 +1,4 @@
-# HanshinShop (토이프로젝트)
+# HanshinShop (쇼핑몰)
 
 ### 기술
 - SpringBoot
