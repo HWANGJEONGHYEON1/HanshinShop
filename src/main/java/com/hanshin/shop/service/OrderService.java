@@ -20,8 +20,8 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final CartMapper cartMapper;
 
-    public OrderVO selectByUserId(Long userId) {
-        return orderMapper.selectByOrderId(userId);
+    public OrderVO selectByOrderId(Long orderId) {
+        return orderMapper.selectByOrderId(orderId);
     }
 
     public int orderCount(Long userId) {
@@ -33,7 +33,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void insert(List<OrderDto> orderDtoList, User user) {
+    public Long insert(List<OrderDto> orderDtoList, User user) {
 
         List<OrderGoodsVO> orderGoodsVOList = getOrderDtoList(orderDtoList);
 
@@ -42,6 +42,8 @@ public class OrderService {
         saveOrderGoodsItem(orderGoodsVOList, order);
 
         cartMapper.deleteAll(user.getId());
+
+        return order.getId();
     }
 
     private List<OrderGoodsVO> getOrderDtoList(List<OrderDto> orderDtoList) {
