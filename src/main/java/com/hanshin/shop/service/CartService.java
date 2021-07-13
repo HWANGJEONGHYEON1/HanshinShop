@@ -4,6 +4,7 @@ import com.hanshin.shop.vo.cart.CartVO;
 import com.hanshin.shop.repository.CartMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
 public class CartService {
 
     private final CartMapper cartMapper;
@@ -51,7 +53,7 @@ public class CartService {
     @Transactional
     public int deleteAll(Long userId) {
         final List<CartVO> all = cartMapper.findAll(userId);
-        log.info("deleteALl {}", all.size());
+
         if (all.isEmpty() || all.size() == 0) {
             throw new IllegalStateException("삭제할 상품이 없습니다.");
         }

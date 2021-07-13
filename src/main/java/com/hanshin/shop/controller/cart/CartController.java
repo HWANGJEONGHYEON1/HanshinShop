@@ -20,9 +20,8 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("/cart/{userId}")
-    public List<CartVO> shop(@PathVariable("userId") Long userId) {
-        final List<CartVO> carts = cartService.findAll(userId);
-        return carts;
+    public List<CartVO> shop(@PathVariable Long userId) {
+        return cartService.findAll(userId);
     }
 
     @DeleteMapping("/cart/{id}")
@@ -30,6 +29,7 @@ public class CartController {
         cartService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("/carts/{userId}")
     public ResponseEntity<Void> deleteAll(@PathVariable Long userId) {
         cartService.deleteAll(userId);
@@ -41,11 +41,10 @@ public class CartController {
         return cartService.count(userId);
     }
 
-    @PostMapping("/cart/{id}")
-    public ResponseEntity<Void> cart(@PathVariable Long id, @RequestBody CartDTO cartDTO) {
+    @PostMapping("/cart")
+    public ResponseEntity<Void> cart(@RequestBody CartDTO cartDTO) {
         final CartVO save = CartVO.save(cartDTO);
         cartService.insert(save);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

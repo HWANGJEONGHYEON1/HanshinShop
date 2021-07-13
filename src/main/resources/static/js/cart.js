@@ -99,7 +99,6 @@
             param.push(orderInfo);
         };
 
-        console.log("# api");
         console.log(param);
         $.ajax({
             url: "/api/order",

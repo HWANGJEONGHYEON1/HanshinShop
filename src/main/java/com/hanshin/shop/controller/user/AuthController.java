@@ -35,7 +35,6 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto, HttpServletResponse response) {
-
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
@@ -53,7 +52,6 @@ public class AuthController {
 
     @PostMapping(value = "/signup")
     public User signUp(@Validated @RequestBody UserDto userDto) {
-
         return userService.signUp(userDto);
     }
 
@@ -81,8 +79,6 @@ public class AuthController {
     @GetMapping("/user/{username}")
     @PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
     public ResponseEntity<User> getMyUserInfo(@PathVariable String username) {
-
         return ResponseEntity.ok(userService.getUserInfo(username));
     }
-
 }

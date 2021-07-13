@@ -27,14 +27,12 @@ public class GoodsController {
 
     @PostMapping("/goods/new")
     public ResponseEntity<Void> register(@RequestBody Goods goods) {
-
         if (goods.getAttachList() != null) {
             goods.getAttachList()
                     .forEach(attach -> log.info("### {} , {}", attach.getFileName(), attach.getUploadPath()));
         }
 
         goodsService.save(goods);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -45,7 +43,6 @@ public class GoodsController {
         map.put("goodsAll", goodsAll);
         map.put("pageMaker", new PageDto(123, cri));
         return new ResponseEntity<>(map, HttpStatus.OK);
-
     }
 
     @GetMapping("/recommend")

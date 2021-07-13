@@ -440,7 +440,7 @@
         };
 
         $.ajax({
-            url: '/api/cart/' + userId,
+            url: '/api/cart',
             dataType: 'text',
             contentType: 'application/json',
             data: JSON.stringify(data),

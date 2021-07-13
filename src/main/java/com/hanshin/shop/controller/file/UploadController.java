@@ -34,8 +34,6 @@ public class UploadController {
 
     @PostMapping("/deleteFile")
     public ResponseEntity<Void> deleteFile(String fileName) throws UnsupportedEncodingException {
-        log.info("fileName {}", fileName);
-
         File file;
         file = new File(uploadFolder + URLDecoder.decode(fileName, "UTF-8"));
         file.delete();
@@ -90,8 +88,6 @@ public class UploadController {
        final Instant instant = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
        Date date = Date.from(instant);
        String str = sdf.format(date);
-       log.info("=== getFolder");
-       log.info(str);
        return str.replace("-", File.separator);
    }
 }

@@ -35,7 +35,6 @@ public class OrderController {
     public List<OrderDetailDto> orderDetails(@LoginUser User user) {
         Long userId = user.getId();
         final List<OrderDetailDto> orderDetails = orderService.findOrderDetails(userId);
-        log.info("orderDetails : " + orderDetails);
         return orderDetails;
     }
 

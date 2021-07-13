@@ -34,10 +34,6 @@ public class GoodsService {
         });
     }
 
-//    public List<Goods> findAllList() {
-//        return goodsMapper.findAllList();
-//    }
-
     public List<Goods> findAllList(Criteria criteria) {
         log.info("cri {}", criteria);
         return goodsMapper.getListWithPaging(criteria);
@@ -46,8 +42,8 @@ public class GoodsService {
     public List<Goods> findRecommendGoods() {
         final List<Goods> allGoodsList = goodsMapper.findAllList();
         return getShuffleList(allGoodsList);
-
     }
+
     public Goods findOne(Long goodsId) {
         return goodsMapper.findOne(goodsId);
     }

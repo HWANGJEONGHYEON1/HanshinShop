@@ -1,3 +1,4 @@
+
 spring:
   datasource:
       url: jdbc:log4jdbc:mysql://localhost:3306/kurly?serverTimezone=UTC&characterEncoding=UTF-8
@@ -33,3 +34,5 @@ logging:
     jdbc.sqlonly: DEBUG ## 이부분 추가.
     org.springframework.web: DEBUG
     com.zaxxer.hikari.HikariDataSource: ERROR
+server:
+  port: 8081
