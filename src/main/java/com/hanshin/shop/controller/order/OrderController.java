@@ -42,6 +42,4 @@ public class OrderController {
     public void cancel(@PathVariable Long id) {
         orderService.orderCancel(id);
     }
-
-
 }
