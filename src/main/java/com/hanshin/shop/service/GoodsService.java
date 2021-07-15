@@ -19,13 +19,15 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class GoodsService {
 
+    private static final int LIMIT_COUNT = 4;
+    private static final int ZERO = 0;
     private final GoodsMapper goodsMapper;
     private final GoodsAttachMapper attachMapper;
 
     @Transactional
     public void save(Goods goods) {
         goodsMapper.save(goods);
-        if (goods.getAttachList() == null || goods.getAttachList().size() <= 0) {
+        if (goods.getAttachList() == null || goods.getAttachList().size() <= ZERO) {
             return ;
         }
         goods.getAttachList().forEach(attach -> {
@@ -35,7 +37,6 @@ public class GoodsService {
     }
 
     public List<Goods> findAllList(Criteria criteria) {
-        log.info("cri {}", criteria);
         return goodsMapper.getListWithPaging(criteria);
     }
 
@@ -57,13 +58,17 @@ public class GoodsService {
 
     private List<Goods> getShuffleList(List<Goods> allGoodsList) {
         Collections.shuffle(allGoodsList);
-        int limitCount = 4;
-        if (allGoodsList.size() < 4) {
-            limitCount = allGoodsList.size();
-        }
-        log.info("limit {} ", limitCount);
+        int limitCount = getLimitCount(allGoodsList);
         return allGoodsList.stream()
                 .limit(limitCount)
                 .collect(Collectors.toList());
+    }
+
+    private int getLimitCount(List<Goods> allGoodsList) {
+        int limitCount = LIMIT_COUNT;
+        if (allGoodsList.size() < LIMIT_COUNT) {
+            limitCount = allGoodsList.size();
+        }
+        return limitCount;
     }
 }
