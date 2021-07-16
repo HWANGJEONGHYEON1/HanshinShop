@@ -23,10 +23,9 @@ public class CartService {
     @Transactional
     public void insert(CartVO cartVO) {
         final CartVO existCartVO = isExistCartOne(cartVO.getGoodsId(), cartVO.getUserId());
-        log.info("existVO {}", existCartVO);
-
+        log.info("#existVO {}", existCartVO);
         if (Objects.isNull(existCartVO)) {
-            cartMapper.insert(cartVO);
+            cartMapper.save(cartVO);
         } else {
             log.info("existVO {}", existCartVO);
             cartMapper.update(cartVO.getAmount(), existCartVO.getId());

@@ -1,6 +1,7 @@
 package com.hanshin.shop.vo.cart;
 
 import com.hanshin.shop.vo.goods.GoodsAttachVO;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class CartVO {
 
