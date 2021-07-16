@@ -34,9 +34,9 @@
         delete from cart where user_id = #{userId}
     </delete>
 
-    <insert id="insert">
+    <insert id="save">
         insert into cart(goods_id, amount, user_id)
-        values(#{goodsId}, #{amount}, #{userId})
+        values( #{goodsId}, #{amount}, #{userId} )
     </insert>
 
     <select id="isExistCartOne" resultType="com.hanshin.shop.vo.cart.CartVO">
