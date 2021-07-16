@@ -43,8 +43,6 @@ public class CartController {
 
     @PostMapping("/cart/save")
     public ResponseEntity<Void> cart(@RequestBody CartVO cartVO) {
-//        final CartVO save = CartVO.save(cartDTO);
-        log.info("cartVO : {}", cartVO);
         cartService.insert(cartVO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
