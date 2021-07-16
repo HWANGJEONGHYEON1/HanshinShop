@@ -41,10 +41,11 @@ public class CartController {
         return cartService.count(userId);
     }
 
-    @PostMapping("/cart")
-    public ResponseEntity<Void> cart(@RequestBody CartDTO cartDTO) {
-        final CartVO save = CartVO.save(cartDTO);
-        cartService.insert(save);
+    @PostMapping("/cart/save")
+    public ResponseEntity<Void> cart(@RequestBody CartVO cartVO) {
+//        final CartVO save = CartVO.save(cartDTO);
+        log.info("cartVO : {}", cartVO);
+        cartService.insert(cartVO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
