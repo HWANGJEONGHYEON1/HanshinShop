@@ -33,7 +33,7 @@ public class Goods {
     private List<GoodsAttachVO> attachList;
 
     private Goods(GoodsDto dto) {
-        this.name = dto.getName();;
+        this.name = dto.getName();
         this.categoryId = dto.getCategoryId();
         this.price = dto.getPrice();
         this.description = dto.getDescription();
