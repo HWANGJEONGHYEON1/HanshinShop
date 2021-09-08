@@ -3,7 +3,6 @@ package com.hanshin.shop.controller.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hanshin.shop.vo.user.UserRole;
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.validation.constraints.Size;
@@ -19,13 +18,11 @@ public class UserDto {
 
     private Long id;
 
-    @NotNull
     @Size(min = 1, max = 50)
     private String name;
 
     private String account;
 
-    @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(min = 3, max = 50)
     private String password;
@@ -34,7 +31,6 @@ public class UserDto {
 
     private String address;
 
-    @NotNull
     @Size(min = 3, max = 50)
     private String email;
 

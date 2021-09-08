@@ -4,6 +4,7 @@ import com.hanshin.shop.vo.cart.CartVO;
 import com.hanshin.shop.repository.CartMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,14 +14,14 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
 public class CartService {
 
     private final CartMapper cartMapper;
 
-    @Transactional
+    @Cacheable(value = "cartCache")
     public void insert(CartVO cartVO) {
         final CartVO existCartVO = isExistCartOne(cartVO.getGoodsId(), cartVO.getUserId());
         log.info("#existVO {}", existCartVO);

@@ -2,9 +2,6 @@ package com.hanshin.shop.vo.goods;
 
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Goods {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;

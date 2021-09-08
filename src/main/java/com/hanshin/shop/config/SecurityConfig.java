@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/resources/**").permitAll()
-            .antMatchers("/api/**","/", "/login", "/signup", "/goods/**").permitAll()
+            .antMatchers("/api/**","/", "/login", "/signup", "/goods/**", "/redisTest").permitAll()
             .anyRequest().authenticated()
             .and()
             .apply(new JwtSecurityConfig(tokenProvider));

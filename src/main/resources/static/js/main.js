@@ -439,13 +439,16 @@
             amount : amount
         };
 
+        console.log(data);
+
         $.ajax({
             url: '/api/cart',
             dataType: 'text',
             contentType: 'application/json',
             data: JSON.stringify(data),
             type: 'post',
-            success: function () {
+            success: function (e) {
+                console.log(e);
                 alert("장바구니에 담겼습니다.");
                 initCartCount(userId);
             }
