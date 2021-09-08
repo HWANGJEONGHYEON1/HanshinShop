@@ -41,7 +41,7 @@ public class CartController {
         return cartService.count(userId);
     }
 
-    @PostMapping("/cart/save")
+    @PostMapping("/cart")
     public ResponseEntity<Void> cart(@RequestBody CartVO cartVO) {
         cartService.insert(cartVO);
         return new ResponseEntity<>(HttpStatus.OK);
