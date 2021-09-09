@@ -40,6 +40,7 @@ public class GoodsController {
 
     @GetMapping("/main")
     public ResponseEntity<Map<String, Object>> list(Criteria cri) {
+        log.info("## main");
         Map<String, Object> map = new HashMap<>();
         final List<Goods> goodsAll = goodsService.findAllList(cri);
         map.put("goodsAll", goodsAll);
@@ -49,6 +50,7 @@ public class GoodsController {
 
     @GetMapping("/recommend")
     public List<Goods> recommendList() {
+        log.info("## recommend");
         return goodsService.findRecommendGoods();
     }
 

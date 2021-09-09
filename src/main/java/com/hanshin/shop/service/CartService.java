@@ -21,7 +21,8 @@ public class CartService {
 
     private final CartMapper cartMapper;
 
-    @Cacheable(value = "cartCache")
+    @Cacheable(value = "cartCache", key = "#cartVO.goodsId")
+    @Transactional
     public void insert(CartVO cartVO) {
         final CartVO existCartVO = isExistCartOne(cartVO.getGoodsId(), cartVO.getUserId());
         log.info("#existVO {}", existCartVO);

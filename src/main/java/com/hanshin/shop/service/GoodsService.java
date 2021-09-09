@@ -6,6 +6,7 @@ import com.hanshin.shop.repository.GoodsMapper;
 import com.hanshin.shop.vo.paging.Criteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +41,11 @@ public class GoodsService {
         return goodsMapper.getListWithPaging(criteria);
     }
 
+    @Cacheable(value = "recommendList")
     public List<Goods> findRecommendGoods() {
+        log.info("## cache");
         final List<Goods> allGoodsList = goodsMapper.findAllList();
+
         return getShuffleList(allGoodsList);
     }
 
