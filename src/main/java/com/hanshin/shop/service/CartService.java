@@ -34,15 +34,14 @@ public class CartService {
         }
     }
 
+    @Cacheable(value = "count")
     public int count(Long userId) {
         return cartMapper.count(userId);
     }
 
     @Cacheable(key = "#userId", value = "cart")
     public List<CartVO> findAll(Long userId) {
-        final List<CartVO> all = cartMapper.findAll(userId);
-        log.info("## cartList {}", all);
-        return all;
+        return cartMapper.findAll(userId);
     }
 
     public CartVO isExistCartOne(Long goodsId, Long userId) {

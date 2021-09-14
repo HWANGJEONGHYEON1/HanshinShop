@@ -209,7 +209,6 @@
         $button.parent().find('input').val(newVal);
     });
 
-    console.log("top.js")
     initUserInfo();
 
     function initUserInfo() {
@@ -219,27 +218,29 @@
             type: 'get',
             success: function (result) {
                 let loginDivArray = [];
+                console.log(result);
                 if (!$.isEmptyObject(result)) {
+
                     initCartCount(result.id);
                     initOrderCount();
                     loginDivArray.push(`
-                    <div class="header__top__right__language">
-                        <div id="username" data-id="${result.id}">${result.name}</div>
-                        <span class="arrow_carrot-down"></span>
-                        <ul>
-                            <li><button type="button" id="logoutButton"/><i class="fa fa-user"></i> Logout</li>
-                        </ul>
-                    </div>
-                `);
+                        <div class="header__top__right__language">
+                            <div id="username" data-id="${result.id}">${result.name}</div>
+                            <span class="arrow_carrot-down"></span>
+                            <ul>
+                                <li><button type="button" id="logoutButton"/><i class="fa fa-user"></i> Logout</li>
+                            </ul>
+                        </div>
+                    `);
 
                 } else {
                     loginDivArray.push(`
-                    <div class="header__top__right__auth">
-                        <span><a href="/login"><i class="fa fa-user"></i> Login</a></span>
-                    </div>                
-                `);
+                        <div class="header__top__right__auth">
+                            <span><a href="/login"><i class="fa fa-user"></i> Login</a></span>
+                        </div>                
+                    `);
                 }
-
+                console.log("loginDivArray " + loginDivArray)
                 $("#loginDiv").append(loginDivArray);
             }
         });
@@ -251,7 +252,6 @@
             dataType: 'json',
             type: 'get',
             success: function (result) {
-                console.log("# " + result);
                 $("#orderCount").empty();
                 $("#orderCount").append(`<a href="/member/order"><i class="fa fa-heart"></i> <span>${result}</span></a>`);
             }
@@ -265,7 +265,6 @@
             type: 'get',
             success: function (result) {
                 $("#cartCount").empty();
-                console.log(userId);
                 $("#cartCount").append(`<a href="/member/cart?userId=${userId}"><i class="fa fa-shopping-bag"></i> <span>${result}</span></a>`);
             }
         });
