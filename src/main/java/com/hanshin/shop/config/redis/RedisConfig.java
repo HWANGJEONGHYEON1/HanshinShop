@@ -29,6 +29,7 @@ public class RedisConfig {
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
+    // 실제로 template 역할 key serializer, value serializer 통해 실제 데이터를 변환하는 과정
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
         // Value Serializer를 통해서 실제 데이터를 변환하는 과정이 필요

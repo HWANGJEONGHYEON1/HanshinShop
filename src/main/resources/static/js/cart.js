@@ -54,8 +54,6 @@
         });
     }
 
-    cartList();
-
     $(document).on("click", "#deleteBtn", function(e) {
         
         let cartId = $(this).data("id");
