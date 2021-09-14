@@ -26,4 +26,5 @@
 - 페이징 처리 
 - 주문
 - Mybatis to JPA(~ing)
+- redis 장바구니 및 추천목록 캐싱
 
