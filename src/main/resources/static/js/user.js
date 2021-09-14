@@ -15,7 +15,6 @@ let main = {
             console.log("# signupButton")
             _this.signup();
         })
-
     },
 
     signup : function () {
