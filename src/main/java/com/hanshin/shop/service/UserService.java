@@ -6,6 +6,7 @@ import com.hanshin.shop.repository.UserMapper;
 import com.hanshin.shop.vo.user.RoleType;
 import com.hanshin.shop.vo.user.UserRole;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +54,7 @@ public class UserService {
         mapper.registerRole(role);
     }
 
+    @Cacheable(key = "#username", value = "getUser")
     public User getUserInfo(String username) {
         return mapper.findByEmail(username);
     }

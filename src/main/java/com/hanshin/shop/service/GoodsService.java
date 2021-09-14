@@ -45,7 +45,7 @@ public class GoodsService {
     public List<Goods> findRecommendGoods() {
         log.info("## cache");
         final List<Goods> allGoodsList = goodsMapper.findAllList();
-
+        log.info("## " + allGoodsList);
         return getShuffleList(allGoodsList);
     }
 
