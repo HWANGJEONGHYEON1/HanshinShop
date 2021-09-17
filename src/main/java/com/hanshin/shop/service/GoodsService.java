@@ -1,5 +1,6 @@
 package com.hanshin.shop.service;
 
+import com.hanshin.shop.config.redis.CacheConfig;
 import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.repository.GoodsAttachMapper;
 import com.hanshin.shop.repository.GoodsMapper;
@@ -13,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.hanshin.shop.config.redis.CacheConfig.CACHE_LIST_MANAGER;
+import static com.hanshin.shop.config.redis.CacheConfig.KEY_GENERATOR;
 
 @Service
 @RequiredArgsConstructor
@@ -37,16 +41,16 @@ public class GoodsService {
         });
     }
 
+    @Cacheable(
+            cacheNames = "list",
+            cacheManager = CACHE_LIST_MANAGER,
+            keyGenerator = KEY_GENERATOR)
     public List<Goods> findAllList(Criteria criteria) {
         return goodsMapper.getListWithPaging(criteria);
     }
 
-    @Cacheable(value = "recommendList")
     public List<Goods> findRecommendGoods() {
-        log.info("## cache");
-        final List<Goods> allGoodsList = goodsMapper.findAllList();
-        log.info("## " + allGoodsList);
-        return getShuffleList(allGoodsList);
+        return getShuffleList(goodsMapper.findAllList());
     }
 
     public Goods findOne(Long goodsId) {
@@ -60,7 +64,7 @@ public class GoodsService {
         return goodsMapper.findListOfCategory(categoryId);
     }
 
-    private List<Goods> getShuffleList(List<Goods> allGoodsList) {
+    public List<Goods> getShuffleList(List<Goods> allGoodsList) {
         Collections.shuffle(allGoodsList);
         int limitCount = getLimitCount(allGoodsList);
         return allGoodsList.stream()

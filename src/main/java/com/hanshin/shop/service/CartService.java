@@ -1,5 +1,6 @@
 package com.hanshin.shop.service;
 
+import com.hanshin.shop.config.redis.CacheConfig;
 import com.hanshin.shop.vo.cart.CartVO;
 import com.hanshin.shop.repository.CartMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.hanshin.shop.config.redis.CacheConfig.CACHE_MANAGER;
 
 @Service
 @Slf4j
@@ -39,7 +42,7 @@ public class CartService {
         return cartMapper.count(userId);
     }
 
-    @Cacheable(key = "#userId", value = "cart")
+    @Cacheable(key = "#userId", value = "cart", cacheManager = CACHE_MANAGER)
     public List<CartVO> findAll(Long userId) {
         return cartMapper.findAll(userId);
     }

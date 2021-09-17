@@ -50,7 +50,6 @@ public class GoodsController {
 
     @GetMapping("/recommend")
     public List<Goods> recommendList() {
-        log.info("## recommend");
         return goodsService.findRecommendGoods();
     }
 

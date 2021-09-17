@@ -1,6 +1,7 @@
 package com.hanshin.shop.config.redis;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +16,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @RequiredArgsConstructor
 @EnableRedisRepositories
 @Configuration
+@Slf4j
 public class RedisConfig {
-
     private final RedisProperties redisProperties;
 
     @Bean
@@ -31,14 +32,14 @@ public class RedisConfig {
 
     // 실제로 template 역할 key serializer, value serializer 통해 실제 데이터를 변환하는 과정
     @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
+    public RedisTemplate<String, String> redisTemplate() {
+        log.info("# redistemplate");
         // Value Serializer를 통해서 실제 데이터를 변환하는 과정이 필요
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         // 객체가 json 형태로 변환되는 것을 도와줌
-
         return redisTemplate;
     }
 }
