@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
@@ -42,19 +43,16 @@ public class UploadController {
     }
 
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getFile(String fileName) {
+    public ResponseEntity<byte[]> getFile(String fileName) throws IOException {
         log.info("fileName {}", fileName);
         File file = new File(uploadFolder + fileName);
         log.info("file {}", file);
-        ResponseEntity<byte[]> result = null;
+        ResponseEntity<byte[]> result;
 
-        try {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Content-type", Files.probeContentType(file.toPath()));
-            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),httpHeaders,HttpStatus.OK);
-        } catch (Exception e){
-            log.error("# {}", e);
-        }
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-type", Files.probeContentType(file.toPath()));
+        result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),httpHeaders,HttpStatus.OK);
+
         return result;
     }
 
