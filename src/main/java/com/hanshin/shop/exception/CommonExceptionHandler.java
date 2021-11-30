@@ -41,5 +41,4 @@ public class CommonExceptionHandler {
         responseEntity.addError(responseError);
         return responseEntity;
     }
-
 }
