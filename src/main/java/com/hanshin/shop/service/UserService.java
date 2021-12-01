@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class UserService {
 
+    private static final String ALREADY_USER = "이미 가입되어있는 유저입니다.";
     private final UserMapper mapper;
     private static BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -26,7 +27,7 @@ public class UserService {
     @Transactional
     public User signUp(UserDto user) {
         if (isExist(user.getEmail())) {
-            throw new RuntimeException("이미 가입되어있는 유저입니다.");
+            throw new RuntimeException(ALREADY_USER);
         }
         saveUserRole(user);
         mapper.signUp(saveUser(user));
@@ -49,13 +50,13 @@ public class UserService {
 
     private void saveUserRole(UserDto user) {
         UserRole role = new UserRole();
-            role.setRole(RoleType.ROLE_MEMBER);
-            role.setEmail(user.getEmail());
+        role.setRole(RoleType.ROLE_MEMBER);
+        role.setEmail(user.getEmail());
         mapper.registerRole(role);
     }
 
-    @Cacheable(key = "#username", value = "getUser")
-    public User getUserInfo(String username) {
-        return mapper.findByEmail(username);
+//    @Cacheable(key = "#email", value = "getUser")
+    public User getUserInfo(String email) {
+        return mapper.findByEmail(email);
     }
 }

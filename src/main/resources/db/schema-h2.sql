@@ -1,11 +1,4 @@
-CREATE TABLE `attach` (
-                          `uuid` varchar(100) NOT NULL,
-                          `upload_path` varchar(100) NOT NULL,
-                          `file_name` varchar(100) DEFAULT NULL,
-                          `goods_id` int DEFAULT NULL,
-                          KEY `fk_goods_attach` (`goods_id`),
-                          CONSTRAINT `fk_goods_attach` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`id`)
-) ENGINE=InnoDB;
+
 
 CREATE TABLE `cart` (
                         `id` int NOT NULL AUTO_INCREMENT,
@@ -13,13 +6,13 @@ CREATE TABLE `cart` (
                         `amount` int DEFAULT NULL,
                         `user_id` int DEFAULT NULL,
                         PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73;
+);
 
 CREATE TABLE `category` (
                             `id` int NOT NULL AUTO_INCREMENT,
                             `name` varchar(10) DEFAULT NULL,
                             PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6;
+);
 
 CREATE TABLE `goods` (
                          `id` int NOT NULL AUTO_INCREMENT,
@@ -31,7 +24,7 @@ CREATE TABLE `goods` (
                          `description` varchar(1000) DEFAULT NULL,
                          `review_count` decimal(10,0) DEFAULT NULL,
                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=231;
+);
 
 CREATE TABLE `GoodsImg` (
                             `id` int NOT NULL AUTO_INCREMENT,
@@ -39,7 +32,7 @@ CREATE TABLE `GoodsImg` (
                             `url` varchar(100) DEFAULT NULL,
                             `file_name` varchar(100) DEFAULT NULL,
                             PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE `order_goods` (
                                `id` int NOT NULL AUTO_INCREMENT,
@@ -48,7 +41,7 @@ CREATE TABLE `order_goods` (
                                `order_price` int DEFAULT NULL,
                                `amount` int DEFAULT NULL,
                                PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=122;
+);
 
 CREATE TABLE `orders` (
                           `id` int NOT NULL AUTO_INCREMENT,
@@ -58,7 +51,7 @@ CREATE TABLE `orders` (
                           `state` varchar(100) DEFAULT NULL,
                           `order_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                           PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118;
+);
 
 CREATE TABLE `Review` (
                           `id` int NOT NULL AUTO_INCREMENT,
@@ -72,13 +65,13 @@ CREATE TABLE `Review` (
                           `goods_img_uuid` varchar(100) DEFAULT NULL,
                           `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                           PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE `test` (
                         `test_id` int NOT NULL AUTO_INCREMENT,
                         `test_name` varchar(10) DEFAULT NULL,
                         PRIMARY KEY (`test_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3;
+);
 
 CREATE TABLE `user` (
                         `id` int NOT NULL AUTO_INCREMENT,
@@ -92,9 +85,18 @@ CREATE TABLE `user` (
                         `join_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                         PRIMARY KEY (`id`,`email`),
                         UNIQUE KEY `IDX_User_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=23;
+);
 
 CREATE TABLE `user_role` (
                              `email` varchar(100) DEFAULT NULL,
                              `role` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB;
+);
+
+CREATE TABLE `attach` (
+                          `uuid` varchar(100) NOT NULL,
+                          `upload_path` varchar(100) NOT NULL,
+                          `file_name` varchar(100) DEFAULT NULL,
+                          `goods_id` int DEFAULT NULL,
+                          KEY `fk_goods_attach` (`goods_id`),
+                          CONSTRAINT `fk_goods_attach` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`id`)
+);

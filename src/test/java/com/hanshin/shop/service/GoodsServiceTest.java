@@ -24,7 +24,6 @@ class GoodsServiceTest {
     @Autowired
     private GoodsService goodsService;
 
-
     @Test
     public void 화면에_뿌려줄_상품() throws Exception {
         //given
@@ -33,7 +32,6 @@ class GoodsServiceTest {
         Assertions.assertThat(allIncludeAttach.size()).isEqualTo(goodsService.findAllList(criteria).size());
         //then
     }
-
 
     @Test
     public void 저장() throws Exception {
