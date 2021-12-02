@@ -51,6 +51,6 @@ public class UserServiceTest extends IntegrationTests {
     @DisplayName("이메일로 해당 유저가 있는지 확인")
     @Transactional(readOnly = true)
     void confirm_user_info() {
-        assertThat(userService.getUserInfo(email).getName()).isEqualTo("hwang");
+        assertThat("hwang").isEqualTo(userService.getUserInfo(email).getName());
     }
 }

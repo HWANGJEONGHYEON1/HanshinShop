@@ -53,7 +53,7 @@ class OrderServiceTest extends IntegrationTests {
     @Test
     @DisplayName("상품주문 했을시 OrderStatus 값 확인")
     @Transactional(readOnly = true)
-    public void goods_order() throws Exception {
+    public void goods_order() {
 
         final OrderVO orderedVO = orderService.selectByOrderId(orderId);
         //then
@@ -71,7 +71,7 @@ class OrderServiceTest extends IntegrationTests {
 
     @Test
     @DisplayName("주문을 이미 취소했을 때, 다시 주문 취소햇을 때 에러발생")
-    public void order_cancel_exception() throws Exception {
+    public void order_cancel_exception() {
         orderService.orderCancel(orderId);
         Assertions.assertThatThrownBy(() -> orderService.orderCancel(orderId))
                 .isInstanceOf(IllegalStateException.class);
@@ -80,13 +80,12 @@ class OrderServiceTest extends IntegrationTests {
 
     @Test
     @DisplayName("주문 취소 시 OrderStatus.CANCEL")
-    public void order_cancel() throws Exception {
-        System.out.println("# orderID : " + orderId);
+    public void order_cancel() {
         //given
         final OrderVO one = orderService.selectByOrderId(orderId);
         //when
         orderService.orderCancel(orderId);
         //then
-        Assertions.assertThat(one.getState()).isEqualTo(OrderStatus.CANCEL);
+        Assertions.assertThat(OrderStatus.CANCEL).isEqualTo(one.getState());
     }
 }
