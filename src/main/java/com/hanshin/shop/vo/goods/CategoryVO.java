@@ -1,11 +1,14 @@
 package com.hanshin.shop.vo.goods;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@AllArgsConstructor
 public class CategoryVO {
 
-    int id;
-    String name;
+    private int id;
+    private String name;
 }
