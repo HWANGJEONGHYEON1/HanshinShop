@@ -3,22 +3,13 @@ package com.hanshin.shop.service;
 import com.hanshin.shop.IntegrationTests;
 import com.hanshin.shop.controller.user.dto.UserDto;
 import com.hanshin.shop.vo.user.RoleType;
-import com.hanshin.shop.vo.user.User;
 import com.hanshin.shop.vo.user.UserRole;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
 import java.util.Collections;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserServiceTest extends IntegrationTests {
