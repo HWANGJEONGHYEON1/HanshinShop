@@ -2,7 +2,6 @@ package com.hanshin.shop.service;
 
 import com.hanshin.shop.vo.cart.CartDTO;
 import com.hanshin.shop.vo.cart.CartVO;
-import com.hanshin.shop.vo.goods.Goods;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

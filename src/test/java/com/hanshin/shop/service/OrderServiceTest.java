@@ -5,21 +5,16 @@ import com.hanshin.shop.controller.user.dto.UserDto;
 import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.vo.goods.GoodsDto;
 import com.hanshin.shop.vo.order.*;
-import com.hanshin.shop.vo.user.RoleType;
 import com.hanshin.shop.vo.user.User;
 import com.hanshin.shop.repository.GoodsMapper;
 import com.hanshin.shop.repository.UserMapper;
-import com.hanshin.shop.vo.user.UserRole;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 class OrderServiceTest extends IntegrationTests {
