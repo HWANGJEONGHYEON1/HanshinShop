@@ -48,7 +48,7 @@
         <![CDATA[
             where goods.id > 0
             order by goods.id desc
-            limit 0, 20;
+            limit 0, 20
         ]]>
     </select>
 
@@ -61,17 +61,33 @@
 
     <select id="getListWithPaging" resultMap="goodsMap">
         <![CDATA[
-                select id, name, description, category_id,price, uuid, upload_path, file_name
-                from (
-                    select @rownum:=@rownum+1 rn, goods.id, goods.name, goods.description, goods.category_id, goods.price, attach.uuid, attach.upload_path, attach.file_name
-                    from goods goods
-                        join attach attach
-                        on goods.id = attach.goods_id
-                        join category category
-                        on goods.category_id = category.id
-                    , (SELECT @rownum:=0) TMP
-                ) aa
-                where rn <= #{pageNum} * #{amount} and rn >(#{pageNum} - 1) * #{amount};
+        SELECT id,
+               name,
+               description,
+               category_id,
+               price,
+               uuid,
+               upload_path,
+               file_name
+        FROM (
+               SELECT @rownum[*]:=@ROWNUM+1 rn,
+                 goods.id,
+                 goods.name,
+                 goods.description,
+                 goods.category_id,
+                 goods.price,
+                 attach.uuid,
+                 attach.upload_path,
+                 attach.file_name
+                FROM   goods goods
+                JOIN   attach attach
+                ON     goods.id = attach.goods_id
+                JOIN   category category
+                ON     goods.category_id = category.id ,
+                (
+                    SELECT @ROWNUM:=0) tmp
+                ) T
+        where rn <= #{pageNum} * #{amount} and rn >(#{pageNum} - 1) * #{amount}
         ]]>
     </select>
 

@@ -1,6 +1,5 @@
 package com.hanshin.shop.service;
 
-
 import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.vo.goods.GoodsAttachVO;
 import com.hanshin.shop.vo.paging.Criteria;
@@ -11,7 +10,6 @@ import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Arrays;
 import java.util.List;
 
