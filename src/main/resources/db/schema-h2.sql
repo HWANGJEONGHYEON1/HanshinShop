@@ -1,5 +1,3 @@
-
-
 CREATE TABLE `cart` (
                         `id` int NOT NULL AUTO_INCREMENT,
                         `goods_id` int DEFAULT NULL,
