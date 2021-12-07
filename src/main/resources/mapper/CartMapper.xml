@@ -40,9 +40,10 @@
     </insert>
 
     <select id="isExistCartOne" resultType="com.hanshin.shop.vo.cart.CartVO">
-        select id, goods_id, user_id, amount
-        from cart
-        where goods_id = #{goodsId} and user_id = #{userId}
+        select c.id, c.goods_id, user_id, c.amount, g.name
+        from cart c
+        join goods g on c.goods_id = g.id
+        where g.id = #{goodsId} and c.user_id = #{userId}
     </select>
 
     <update id="update">
@@ -55,12 +56,11 @@
     </select>
 
     <sql id="findAll">
-        select c.id, c.goods_id, g.price, g.name goods_name, c.amount, a.uuid, a.upload_path, a.file_name
+        select c.id, c.goods_id, g.price, g.name, c.amount, a.uuid, a.upload_path, a.file_name
         from cart c
                  join goods g on c.goods_id = g.id
                  join user u on c.user_id = u.id
                  join attach a on g.id = a.goods_id
     </sql>
-
 
 </mapper>
