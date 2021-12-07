@@ -65,8 +65,9 @@ class OrderServiceTest extends IntegrationTests {
 
 
     @Test
+    @Transactional
     @DisplayName("주문을 이미 취소했을 때, 다시 주문 취소햇을 때 에러발생")
-    public void order_cancel_exception() {
+    void order_cancel_exception() {
         orderService.orderCancel(orderId);
         Assertions.assertThatThrownBy(() -> orderService.orderCancel(orderId))
                 .isInstanceOf(IllegalStateException.class);
@@ -74,8 +75,9 @@ class OrderServiceTest extends IntegrationTests {
 
 
     @Test
+    @Transactional
     @DisplayName("주문 취소 시 OrderStatus.CANCEL")
-    public void order_cancel() {
+    void order_cancel() {
         //given
         final OrderVO one = orderService.selectByOrderId(orderId);
         //when

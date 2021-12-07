@@ -1,5 +1,6 @@
 package com.hanshin.shop.repository;
 
+import com.hanshin.shop.IntegrationTests;
 import com.hanshin.shop.repository.UserMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-public class UserMapperTests {
+public class UserMapperTests extends IntegrationTests {
 
     @Autowired
     private UserMapper mapper;
@@ -17,14 +17,12 @@ public class UserMapperTests {
     @Test
     @DisplayName("이메일을 통해 유저 정보 잘 가져오는지")
     void userInfoTest() {
-        assertThat(mapper.findByEmail("test@gmail.com").getId()).isEqualTo(3);
+        assertThat("test").isEqualTo(mapper.findByEmail("test@gmail.com").getName());
     }
 
     @Test
     @DisplayName("이메일 중복 체크")
     void isExistEmail() {
         assertThat(mapper.isExistEmail("test@gmail.com")).isEqualTo(1);
-        assertThat(mapper.isExistEmail("aaa@gmail.com")).isEqualTo(0);
     }
-
 }

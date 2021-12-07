@@ -1,5 +1,6 @@
 package com.hanshin.shop.service;
 
+import com.hanshin.shop.config.exception.AttachmentNotExistException;
 import com.hanshin.shop.config.redis.CacheConfig;
 import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.repository.GoodsAttachMapper;
@@ -7,9 +8,11 @@ import com.hanshin.shop.repository.GoodsMapper;
 import com.hanshin.shop.vo.paging.Criteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.graalvm.util.CollectionsUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,11 +33,12 @@ public class GoodsService {
     private final GoodsAttachMapper attachMapper;
 
     @Transactional
-    public void save(Goods goods) {
+    public void register(Goods goods) {
         goodsMapper.save(goods);
-        if (goods.getAttachList() == null || goods.getAttachList().size() <= ZERO) {
-            return ;
+        if (CollectionUtils.isEmpty(goods.getAttachList())) {
+            throw new AttachmentNotExistException();
         }
+
         goods.getAttachList().forEach(attach -> {
             attach.setGoodsId(goods.getId());
             attachMapper.insert(attach);

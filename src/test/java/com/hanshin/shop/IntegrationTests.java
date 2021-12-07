@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
+@Transactional(readOnly = true)
 public abstract class IntegrationTests {
 
 }

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+import static com.hanshin.shop.config.redis.CacheConfig.CACHE_LIST_MANAGER;
 import static com.hanshin.shop.config.redis.CacheConfig.CACHE_MANAGER;
 
 @Service
@@ -26,34 +27,37 @@ public class CartService {
     private final CartMapper cartMapper;
 
     @Transactional
-    public void insert(CartVO cartVO) {
+    public void add(CartVO cartVO) {
         final CartVO existCartVO = isExistCartOne(cartVO.getGoodsId(), cartVO.getUserId());
         log.info("#existVO {}", existCartVO);
         if (Objects.isNull(existCartVO)) {
+            log.info("cartVO {}", cartVO);
             cartMapper.save(cartVO);
-        } else {
-            log.info("existVO {}", existCartVO);
-            cartMapper.update(cartVO.getAmount(), existCartVO.getId());
+            return ;
         }
+        log.info("existVO {}", existCartVO);
+        cartMapper.update(cartVO.getAmount(), existCartVO.getId());
     }
 
     @Cacheable(value = "count")
-    public int count(Long userId) {
+    public int numberOfCart(Long userId) {
         return cartMapper.count(userId);
     }
 
-    @Cacheable(key = "#userId", value = "cart", cacheManager = CACHE_MANAGER)
+    @Cacheable(key = "#userId", value = "cart", cacheManager = CACHE_LIST_MANAGER)
     public List<CartVO> findAll(Long userId) {
         return cartMapper.findAll(userId);
     }
 
     public CartVO isExistCartOne(Long goodsId, Long userId) {
-        return cartMapper.isExistCartOne(goodsId, userId);
+        CartVO existCartOne = cartMapper.isExistCartOne(goodsId, userId);
+        log.info("# existCartOne : {}", existCartOne);
+        return existCartOne;
     }
 
     @Transactional
-    public int delete(Long id) {
-        return cartMapper.delete(id);
+    public int delete(Long cartId) {
+        return cartMapper.delete(cartId);
     }
 
     @Transactional

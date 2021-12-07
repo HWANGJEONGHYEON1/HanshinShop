@@ -20,7 +20,7 @@ public class UserServiceTest extends IntegrationTests {
     private String email = "test@email.com";
 
     @BeforeEach
-    public void createUser() {
+    void createUser() {
         UserRole userRole = new UserRole(email, RoleType.ROLE_MEMBER);
 
         UserDto userDto = new UserDto();
@@ -33,14 +33,12 @@ public class UserServiceTest extends IntegrationTests {
 
     @Test
     @DisplayName("유저 생성 확인")
-    @Transactional(readOnly = true)
     void exist_user() {
         assertThat(userService.isExist(email)).isTrue();
     }
 
     @Test
     @DisplayName("이메일로 해당 유저가 있는지 확인")
-    @Transactional(readOnly = true)
     void confirm_user_info() {
         assertThat("hwang").isEqualTo(userService.getUserInfo(email).getName());
     }

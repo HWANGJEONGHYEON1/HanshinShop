@@ -1,26 +1,25 @@
 package com.hanshin.shop.service;
 
+import com.hanshin.shop.IntegrationTests;
 import com.hanshin.shop.vo.cart.CartDTO;
 import com.hanshin.shop.vo.cart.CartVO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-@Transactional
-class CartServiceTest {
+import java.util.List;
+
+class CartServiceTest extends IntegrationTests {
 
     @Autowired
     CartService cartService;
     @Autowired
     GoodsService goodsService;
 
-    Long goodsId = 27L;
-    Long userId = 1L;
     CartVO cartVO;
 
     @BeforeEach
@@ -29,49 +28,57 @@ class CartServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
-    public void 상품_인서트() throws Exception {
-        insert(1);
+    @WithMockUser(username = "admin", roles = "MEMBER")
+    @DisplayName("장바구니에 담긴 상품의 개수 조회")
+    void get_cart_of_number() {
+        Assertions.assertThat(2).isEqualTo(cartService.numberOfCart(1L));
     }
 
-    private void insert(int amount) {
-        CartDTO dto = new CartDTO(userId, goodsId, amount);
+    @Test
+    @Transactional
+    @DisplayName("장바구니에 상품을 넣는다.")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void cart_add() throws Exception {
+        insert();
+        CartVO existCartOne = cartService.isExistCartOne(2L, 2L);
+        Assertions.assertThat(2L).isEqualTo(existCartOne.getGoodsId());
+        Assertions.assertThat("샤인머스켓").isEqualTo(existCartOne.getName());
+    }
+
+    private void insert() {
+        CartDTO dto = new CartDTO(2L, 2L, 3);
         cartVO = CartVO.save(dto);
-        cartService.insert(cartVO);
+        cartService.add(cartVO);
     }
 
     @Test
+    @DisplayName("카트 아이디로 장바구니 삭제")
+    @Transactional
     @WithMockUser(username = "member", roles = "MEMBER")
-    public void 장바구니_삭제() {
-        //given
-        insert(1);
+    void cart_delete_one() {
+        insert();
         //when
-        final CartVO existCartOne = cartService.isExistCartOne(goodsId, userId);
-        final int deleteCount = cartService.delete(existCartOne.getId());
+        int delete = cartService.delete(1L);
         //then
-        Assertions.assertThat(deleteCount).isEqualTo(1);
-    }
-
-
-    @Test
-    @WithMockUser(username = "member", roles = "MEMBER")
-    public void 추가하려는_상품이_존재하는지() throws Exception {
-        //given
-        insert(3);
-        //when
-        CartVO existCartOne = cartService.isExistCartOne(goodsId, userId);
-
-        //then
-        Assertions.assertThat(existCartOne.getAmount()).isEqualTo(3);
+        Assertions.assertThat(1).isEqualTo(delete);
     }
 
     @Test
+    @DisplayName("카트 전체 삭제")
+    @Transactional
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void 전체_카트_조회() throws Exception {
-        //when
-        Long userId = 19L;
+    void cart_delete_all() {
+        insert();
+        cartService.deleteAll(2L);
+        Assertions.assertThat(0).isEqualTo(cartService.findAll(2L).size());
+    }
+
+    @Test
+    @DisplayName("전체 장바구니 목록 조회")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void cart_list_all() throws Exception {
         //then
-        cartService.findAll(userId);
-        Assertions.assertThat(cartService.findAll(userId).size()).isEqualTo(1);
+        List<CartVO> carts = cartService.findAll(1L);
+        Assertions.assertThat(2).isEqualTo(carts.size());
     }
 }

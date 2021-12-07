@@ -1,6 +1,5 @@
 package com.hanshin.shop.controller.cart;
 
-import com.hanshin.shop.vo.cart.CartDTO;
 import com.hanshin.shop.vo.cart.CartVO;
 import com.hanshin.shop.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -38,12 +37,12 @@ public class CartController {
 
     @GetMapping("/cart/count/{userId}")
     public int count(@PathVariable Long userId) {
-        return cartService.count(userId);
+        return cartService.numberOfCart(userId);
     }
 
     @PostMapping("/cart")
     public ResponseEntity<Void> cart(@RequestBody CartVO cartVO) {
-        cartService.insert(cartVO);
+        cartService.add(cartVO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

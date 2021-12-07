@@ -34,7 +34,7 @@ public class GoodsController {
                     .forEach(attach -> log.info("### {} , {}", attach.getFileName(), attach.getUploadPath()));
         }
 
-        goodsService.save(goods);
+        goodsService.register(goods);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

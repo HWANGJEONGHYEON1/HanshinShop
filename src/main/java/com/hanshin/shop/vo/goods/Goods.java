@@ -2,11 +2,13 @@ package com.hanshin.shop.vo.goods;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @ToString
+@EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Goods {
 
@@ -26,7 +28,7 @@ public class Goods {
 
     private Date regDate;
 
-    private List<GoodsAttachVO> attachList;
+    private List<GoodsAttachVO> attachList = new ArrayList<>();
 
     private Goods(GoodsDto dto) {
         this.name = dto.getName();
@@ -39,6 +41,8 @@ public class Goods {
         return new Goods(goodsDto);
     }
 
-
+    public void addAttach(GoodsAttachVO goodsAttachVO) {
+        attachList.add(goodsAttachVO);
+    }
 
 }

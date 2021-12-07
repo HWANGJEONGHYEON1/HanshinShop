@@ -8,6 +8,7 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
 @ToString
 public class CartVO {
 
@@ -17,7 +18,7 @@ public class CartVO {
 
     private Long goodsId;
 
-    private String goodsName;
+    private String name;
 
     private int price;
 
@@ -33,18 +34,5 @@ public class CartVO {
 
     public static CartVO save(CartDTO dto) {
         return new CartVO(dto);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CartVO cartVO = (CartVO) o;
-        return price == cartVO.price && amount == cartVO.amount && Objects.equals(id, cartVO.id) && Objects.equals(userId, cartVO.userId) && Objects.equals(goodsId, cartVO.goodsId) && Objects.equals(goodsName, cartVO.goodsName) && Objects.equals(attachList, cartVO.attachList);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userId, goodsId, goodsName, price, amount, attachList);
     }
 }
