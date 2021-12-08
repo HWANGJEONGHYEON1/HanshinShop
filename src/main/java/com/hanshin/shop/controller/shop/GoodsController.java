@@ -1,5 +1,6 @@
 package com.hanshin.shop.controller.shop;
 
+import com.hanshin.shop.exception.AttachmentNotExistException;
 import com.hanshin.shop.vo.goods.CategoryVO;
 import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.vo.paging.Criteria;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -28,11 +30,7 @@ public class GoodsController {
 
     @PostMapping("/goods/new")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Void> register(@RequestBody Goods goods) {
-        if (goods.getAttachList() != null) {
-            goods.getAttachList()
-                    .forEach(attach -> log.info("### {} , {}", attach.getFileName(), attach.getUploadPath()));
-        }
+    public ResponseEntity<Void> register(@RequestBody Goods goods) throws AttachmentNotExistException {
 
         goodsService.register(goods);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -40,7 +38,6 @@ public class GoodsController {
 
     @GetMapping("/main")
     public ResponseEntity<Map<String, Object>> list(Criteria cri) {
-        log.info("## main");
         Map<String, Object> map = new HashMap<>();
         final List<Goods> goodsAll = goodsService.findAllList(cri);
         map.put("goodsAll", goodsAll);
@@ -62,10 +59,4 @@ public class GoodsController {
     public List<Goods> categories(@PathVariable Long id) {
         return goodsService.findListOfCategory(id, false);
     }
-
-    @GetMapping("/goods/detail/category/{id}")
-    public List<Goods> relatedCategoryGoods(@PathVariable Long id) {
-        return goodsService.findListOfCategory(id, true);
-    }
-
 }
