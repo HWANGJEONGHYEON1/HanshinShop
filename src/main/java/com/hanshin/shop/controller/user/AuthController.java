@@ -39,8 +39,11 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
         // authenticationToken을 이용해서 authenticate 메소드가 실행될 때 loadUserByUsername이 실행된다.
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = authenticationManagerBuilder.getObject()
+                .authenticate(authenticationToken);
+
+        SecurityContextHolder.getContext()
+                .setAuthentication(authentication);
 
         String jwt = tokenProvider.createToken(authentication);
         final Cookie cookie = new Cookie(JwtFilter.AUTHORIZATION_HEADER, jwt);

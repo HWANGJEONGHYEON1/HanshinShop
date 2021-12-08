@@ -1,7 +1,7 @@
 package com.hanshin.shop.service;
 
 import com.hanshin.shop.IntegrationTests;
-import com.hanshin.shop.config.exception.AttachmentNotExistException;
+import com.hanshin.shop.exception.AttachmentNotExistException;
 import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.vo.goods.GoodsAttachVO;
 import com.hanshin.shop.vo.goods.GoodsDto;
@@ -26,7 +26,6 @@ class GoodsServiceTest extends IntegrationTests {
     @DisplayName("원하는 상품 잘 가져오는지 확인")
     void get_goods() {
         Goods getGoods = goodsService.findOne(1L);
-        System.out.println(getGoods);
         assertThat("파프리카").isEqualTo(getGoods.getName());
     }
 
