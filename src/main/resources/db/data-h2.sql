@@ -1,12 +1,10 @@
 insert into user (password, name, tel, address, email, birth)
-values( 'test', 'test', '010-1111-1111', '', 'test@gmail.com', '', );
-
-insert into user_role(email, role) values('test', 'ROLE_MEMBER');
+values('$2a$10$reDtXMcaM6XlOmmMlpuuWuuVNpgWa7e4IVFui1eQ5qaZZ47YqF8tW', 'test', '010-1111-1111', '', 'test@gmail.com', '', ); -- test
+insert into user_role(email, role) values('test@gmail.com', 'ROLE_ADMIN');
 
 insert into user (password, name, tel, address, email, birth)
-values('test1', 'test1', '010-1111-1111', '', 'test1@naver.com', '');
-
-insert into user_role(email, role) values('test1', 'ROLE_MEMBER');
+values('$2a$10$LGVmPHe1h4VKdGUhyExBN.334JTi7PxXLoJ80gijQr2fb8W5qBhE6', 'test1', '010-1111-1111', '', 'test1@naver.com', ''); -- test1
+insert into user_role(email, role) values('test1@naver.com', 'ROLE_MEMBER');
 
 insert into category(id, name) values(1, 'organic');
 insert into category(id, name) values(2, 'fruit');
