@@ -24,21 +24,4 @@ public class CommonExceptionHandler {
         model.addAttribute("exception", e);
         return "error/error_page";
     }
-
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity notValidParamExceptionHandling(IOException error, HttpStatus httpStatus, HttpServletRequest request) {
-        log.error("{}. uri: {}?{}", error.getMessage(), request.getRequestURI(), request.getQueryString());
-        ResponseObject responseEntity = setResponseError(error, httpStatus);
-        return new ResponseEntity<>(responseEntity, HttpStatus.BAD_REQUEST);
-    }
-
-    private ResponseObject setResponseError(IOException error, HttpStatus httpStatus) {
-        ResponseObject responseEntity = new ResponseObject();
-        ResponseError responseError = new ResponseError();
-        responseError.setStatus(httpStatus.toString());
-        responseError.setTitle(error.getMessage());
-        responseError.setDetail(error.getStackTrace().toString());
-        responseEntity.addError(responseError);
-        return responseEntity;
-    }
 }
