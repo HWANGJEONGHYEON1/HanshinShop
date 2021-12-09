@@ -47,12 +47,16 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String createToken(Authentication authentication) {
-        log.info("# createToken");
+        log.info("jwt createToken");
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
         final Timestamp validTimestamp = Timestamp.valueOf(LocalDateTime.now().plusHours(ONE_HOUR));
 
+        return createJwtAuthToken(authentication, authorities, validTimestamp);
+    }
+
+    private String createJwtAuthToken(Authentication authentication, String authorities, Timestamp validTimestamp) {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)

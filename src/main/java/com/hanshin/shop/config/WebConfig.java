@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
     private final LoginUserArgumentResolver loginUserArgumentResolver;
-    private final CustomInterceptor interceptor;
+    private final CustomInterceptor logInterceptor;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interceptor).addPathPatterns("/**");
+        registry.addInterceptor(logInterceptor).addPathPatterns("/**");
     }
 
     @Bean
@@ -32,6 +32,5 @@ public class WebConfig implements WebMvcConfigurer {
         multipartResolver.setDefaultEncoding("UTF-8"); // 파일 인코딩 설정
         multipartResolver.setMaxUploadSizePerFile(5 * 1024 * 1024); // 파일당 업로드 크기 제한 (5MB)
         return multipartResolver;
-
     }
 }

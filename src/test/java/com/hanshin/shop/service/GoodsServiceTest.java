@@ -1,7 +1,7 @@
 package com.hanshin.shop.service;
 
 import com.hanshin.shop.IntegrationTests;
-import com.hanshin.shop.exception.AttachmentNotExistException;
+import com.hanshin.shop.exception.custom.AttachmentNotExistException;
 import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.vo.goods.GoodsAttachVO;
 import com.hanshin.shop.vo.goods.GoodsDto;

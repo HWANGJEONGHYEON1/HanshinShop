@@ -1,6 +1,6 @@
 package com.hanshin.shop.controller.shop;
 
-import com.hanshin.shop.exception.AttachmentNotExistException;
+import com.hanshin.shop.exception.custom.AttachmentNotExistException;
 import com.hanshin.shop.vo.goods.CategoryVO;
 import com.hanshin.shop.vo.goods.Goods;
 import com.hanshin.shop.vo.paging.Criteria;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @Slf4j

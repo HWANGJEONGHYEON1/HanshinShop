@@ -1,6 +1,9 @@
 package com.hanshin.shop.config.jwt;
 
-
+import com.hanshin.shop.exception.ErrorCode;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -22,7 +25,6 @@ import java.util.Objects;
 @Slf4j
 public class JwtFilter extends GenericFilterBean {
 
-
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final TokenProvider tokenProvider;
@@ -37,10 +39,11 @@ public class JwtFilter extends GenericFilterBean {
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
+            log.info("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
         } else {
-            log.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
+            log.error("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
         }
+
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
@@ -55,6 +58,6 @@ public class JwtFilter extends GenericFilterBean {
                 .filter(name -> name.getName().equals(AUTHORIZATION_HEADER))
                 .map(Cookie::getValue)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(null);
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.servlet.http.Cookie;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,6 +45,23 @@ public class UserControllerTest extends IntegrationTests {
         mvc.perform(post("/api/authenticate")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(loginUser))
+        ).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("jwt token이 유효한 데이터가 아닐경우 401")
+    void authentication_jwt_invalid_() throws Exception {
+        LoginDto loginUser = LoginDto.builder()
+                .username("test@gmail.com")
+                .password("test") // bcrypt 암호화를 통해 비밀번호를 비교하기 때문에 실제 디비에는 암호화 된 비밀번호가 저장되어있다.
+                .build();
+
+        Cookie cookie = new Cookie("Authorization", "invalid");
+
+        mvc.perform(get("/api/order/details")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .cookie(cookie)
+//                .content(objectMapper.writeValueAsString(loginUser))
         ).andExpect(status().isUnauthorized());
     }
 }
