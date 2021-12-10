@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserMapperTests extends IntegrationTests {
+public class UserMapperTest extends IntegrationTests {
 
     @Autowired
     private UserMapper mapper;
