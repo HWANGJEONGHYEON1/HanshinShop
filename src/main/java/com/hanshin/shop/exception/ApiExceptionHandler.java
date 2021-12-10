@@ -6,7 +6,9 @@ import com.hanshin.shop.response.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -53,6 +55,35 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<CommonResponse> handleAccessException(CustomJwtRuntimeException e) {
+
+        log.info("handleJwtException", e);
+
+        CommonResponse response = CommonResponse.builder()
+                .code(ErrorCode.INVALID_JWT_TOKEN.getCode())
+                .message(ErrorCode.INVALID_JWT_TOKEN.getMessage())
+                .status(ErrorCode.INVALID_JWT_TOKEN.getStatus())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(InsufficientAuthenticationException.class)
+    protected ResponseEntity<CommonResponse> handleInsufficientAuthenticationException(InsufficientAuthenticationException e) {
+
+        log.info("handleInsufficientAuthenticationException", e);
+
+        CommonResponse response = CommonResponse.builder()
+                .code(ErrorCode.AUTHENTICATION_FAILED.getCode())
+                .message(ErrorCode.AUTHENTICATION_FAILED.getMessage())
+                .status(ErrorCode.AUTHENTICATION_FAILED.getStatus())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
 
     @ExceptionHandler
     public ResponseEntity<Object> errorHandler(Exception e) {
