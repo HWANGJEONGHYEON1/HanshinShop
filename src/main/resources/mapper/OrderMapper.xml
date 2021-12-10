@@ -10,7 +10,7 @@
         <result property="goodsId" column="goods_id" />
     </resultMap>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="order" useGeneratedKeys="true" keyProperty="id">
         insert into orders (user_id, address, state )
         values (#{userId}, #{address}, #{state})
     </insert>

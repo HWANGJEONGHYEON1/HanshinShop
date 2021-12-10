@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
 
-    Long insert(OrderVO orderVO);
+    Long order(OrderVO orderVO);
 
     void insertOrderGoods(OrderGoodsVO orderGoodsVO);
 

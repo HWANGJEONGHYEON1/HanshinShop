@@ -26,6 +26,12 @@ public class OrderVO {
 
     private Date orderDate;
 
+    public OrderVO(Long userId, Long goodsId, OrderStatus orderStatus) {
+        this.userId = userId;
+        this.goodsId = goodsId;
+        this.state = orderStatus;
+    }
+
     public static OrderVO createOrder(Long userId, String addr, List<OrderGoodsVO> orderGoods) {
         return OrderVO.builder()
                 .userId(userId)

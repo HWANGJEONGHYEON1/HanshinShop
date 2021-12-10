@@ -38,7 +38,7 @@ public class OrderService {
         List<OrderGoodsVO> orderGoodsVOList = getOrderDtoList(orderDtoList);
 
         OrderVO order = OrderVO.createOrder(user.getId(), user.getAddress(), orderGoodsVOList);
-        orderMapper.insert(order);
+        orderMapper.order(order);
         saveOrderGoodsItem(orderGoodsVOList, order);
 
         cartMapper.deleteAll(user.getId());
