@@ -47,12 +47,16 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String createToken(Authentication authentication) {
-        log.info("# createToken");
+        log.info("jwt createToken");
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
         final Timestamp validTimestamp = Timestamp.valueOf(LocalDateTime.now().plusHours(ONE_HOUR));
 
+        return createJwtAuthToken(authentication, authorities, validTimestamp);
+    }
+
+    private String createJwtAuthToken(Authentication authentication, String authorities, Timestamp validTimestamp) {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
@@ -62,6 +66,7 @@ public class TokenProvider implements InitializingBean {
     }
 
     public Authentication getAuthentication(String token) {
+
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -83,8 +88,14 @@ public class TokenProvider implements InitializingBean {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            log.error("잘못된 JWT 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            log.error("만료된 JWT 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            log.error("지원되지 않는 JWT 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            log.error("JWT 토큰이 잘못되었습니다.");
         }
         return false;
     }
