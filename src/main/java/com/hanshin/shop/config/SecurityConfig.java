@@ -1,6 +1,7 @@
 package com.hanshin.shop.config;
 
 import com.hanshin.shop.config.jwt.*;
+import com.hanshin.shop.vo.user.RoleType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -68,10 +69,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/resources/**").permitAll()
             .antMatchers("/api/**","/", "/login", "/signup", "/goods/**").permitAll()
+            .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/cart/count/**").hasAnyAuthority(RoleType.ROLE_ADMIN.name())
             .anyRequest().authenticated()
             .and()
             .apply(new JwtSecurityConfig(tokenProvider));
-
     }
 }
 //                .anyRequest().authenticated()
