@@ -3,6 +3,7 @@ package com.hanshin.shop.repository;
 import com.hanshin.shop.IntegrationTests;
 import com.hanshin.shop.vo.goods.CategoryVO;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -13,17 +14,16 @@ class CategoryMapperTest extends IntegrationTests {
     private CategoryMapper categoryMapper;
 
     @Test
-    public void 카테고리_정보() throws Exception {
-        //given
-        final CategoryVO categoryVO = categoryMapper.get(1L);
+    @DisplayName("카테고리 리스트에 원소 1,2번 조회")
+    public void category_name_element() throws Exception {
         //when then
-        Assertions.assertThat("organic").isEqualTo(categoryVO.getName());
-
+        Assertions.assertThat("organic").isEqualTo(categoryMapper.get(1L).getName());
+        Assertions.assertThat("fruit").isEqualTo(categoryMapper.get(2L).getName());
     }
 
     @Test
-    public void 카테고리_정보_목록() throws Exception {
-        //when
+    @DisplayName("카테고리 리스트 사이즈")
+    public void category_list_size() throws Exception {
 
         final List<CategoryVO> categories = categoryMapper.list();
         //then

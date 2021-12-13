@@ -33,6 +33,4 @@ public class OrderGoodsVO {
     public void receiveOrderId(Long id) {
         this.orderId = id;
     }
-
-
 }
