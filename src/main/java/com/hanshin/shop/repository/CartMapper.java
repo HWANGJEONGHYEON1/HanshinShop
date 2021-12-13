@@ -13,7 +13,7 @@ public interface CartMapper {
 
     int count(Long userId);
 
-    List<CartVO> findAll(long id);
+    List<CartVO> findAll(long userId);
 
     int update(int amount, Long id);
 

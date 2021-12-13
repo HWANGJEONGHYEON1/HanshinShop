@@ -56,7 +56,7 @@
     </select>
 
     <sql id="findAll">
-        select c.id, c.goods_id, g.price, g.name, c.amount, a.uuid, a.upload_path, a.file_name
+        select c.id, c.user_id, c.goods_id, g.price, g.name, c.amount, a.uuid, a.upload_path, a.file_name
         from cart c
                  join goods g on c.goods_id = g.id
                  join user u on c.user_id = u.id

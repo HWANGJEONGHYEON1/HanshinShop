@@ -10,7 +10,5 @@ public interface GoodsAttachMapper {
 
     void insert(GoodsAttachVO vo);
 
-    void delete(String uuid);
-
     List<GoodsAttachVO> findByGoodsId(Long goodsId);
 }

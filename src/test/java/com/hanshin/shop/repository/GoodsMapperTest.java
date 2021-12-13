@@ -56,4 +56,12 @@ class GoodsMapperTest extends IntegrationTests {
         //then
         Assertions.assertThat("새송이버섯").isEqualTo(saveGoods.getName());
     }
+
+    @Test
+    @DisplayName("상품 이미지 조회")
+    void goods_image() {
+        List<GoodsAttachVO> goodsImage = attachMapper.findByGoodsId(1L);
+
+        Assertions.assertThat("/path/").isEqualTo(goodsImage.get(0).getUploadPath());
+    }
 }
