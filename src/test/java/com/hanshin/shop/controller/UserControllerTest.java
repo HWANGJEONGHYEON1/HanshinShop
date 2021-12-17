@@ -1,4 +1,4 @@
-package com.hanshin.shop.controller.shop;
+package com.hanshin.shop.controller;
 
 import com.hanshin.shop.IntegrationTests;
 import com.hanshin.shop.config.jwt.JwtFilter;
@@ -40,7 +40,7 @@ public class UserControllerTest extends IntegrationTests {
     void authentication() throws Exception {
         LoginDto loginUser = LoginDto.builder()
                 .username("test@gmail.com")
-                .password("test") // bcrypt 암호화를 통해 비밀번호를 비교하기 때문에 실제 디비에는 암호화 된 비밀번호가 저장되어있다.
+                .password("test") // bcrypt 암호화를 통해 비밀번호를 비교하기JwtFilter 때문에 실제 디비에는 암호화 된 비밀번호가 저장되어있다.
                 .build();
 
         mvc.perform(post("/api/authenticate")

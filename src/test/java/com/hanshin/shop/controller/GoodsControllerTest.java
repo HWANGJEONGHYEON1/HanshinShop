@@ -1,4 +1,4 @@
-package com.hanshin.shop.controller.shop;
+package com.hanshin.shop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanshin.shop.IntegrationTests;

@@ -27,3 +27,9 @@ values( 2, 10,  1);
 
 insert into cart(goods_id, amount, user_id)
 values( 2, 10,  2);
+
+insert into orders(user_id, state) values(1, 'ORDER');
+insert into order_goods(order_id, goods_id, order_price, amount) values(1, 1, 2000, 1);
+
+insert into orders(user_id, state) values(2, 'ORDER');
+insert into order_goods(order_id, goods_id, order_price, amount) values(2, 2, 33000, 1);
