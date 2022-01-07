@@ -44,7 +44,6 @@ class OrderServiceTest extends IntegrationTests {
         orderId = orderService.insert(dtoList, user);
     }
 
-
     @Test
     @DisplayName("상품주문 했을시 OrderStatus 값 확인")
     @Transactional(readOnly = true)
@@ -63,7 +62,6 @@ class OrderServiceTest extends IntegrationTests {
         return goods.getId();
     }
 
-
     @Test
     @Transactional
     @DisplayName("주문을 이미 취소했을 때, 다시 주문 취소햇을 때 에러발생")
@@ -72,7 +70,6 @@ class OrderServiceTest extends IntegrationTests {
         Assertions.assertThatThrownBy(() -> orderService.orderCancel(orderId))
                 .isInstanceOf(IllegalStateException.class);
     }
-
 
     @Test
     @Transactional

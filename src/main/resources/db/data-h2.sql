@@ -1,5 +1,5 @@
 insert into user (password, name, tel, address, email, birth)
-values('$2a$10$reDtXMcaM6XlOmmMlpuuWuuVNpgWa7e4IVFui1eQ5qaZZ47YqF8tW', 'test', '010-1111-1111', '', 'test@gmail.com', '', ); -- test
+values('$2a$10$reDtXMcaM6XlOmmMlpuuWuuVNpgWa7e4IVFui1eQ5qaZZ47YqF8tW', 'test', '010-1111-1111', '', 'test@gmail.com', ''); -- test
 insert into user_role(email, role) values('test@gmail.com', 'ROLE_MEMBER');
 
 insert into user (password, name, tel, address, email, birth)

@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.9.RELEASE'
+        springBootVersion = '2.6.2'
     }
     repositories {
         mavenCentral()
@@ -28,11 +28,10 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'org.projectlombok:lombok:1.18.20'
+    implementation 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
-    compileOnly 'org.projectlombok:lombok'
+
     runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-mustache'
 
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -51,14 +50,19 @@ dependencies {
     implementation(group: 'net.coobird', name: 'thumbnailator', version: '0.4.8')
 
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.1'
 
-    implementation('org.junit.jupiter:junit-jupiter:5.6.0')
-    implementation('org.assertj:assertj-core:3.15.0')
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude module : 'junit'
+    }
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.springframework.security:spring-security-test")
 
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.5.2"
+
+    annotationProcessor('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
 }
 
 test {
