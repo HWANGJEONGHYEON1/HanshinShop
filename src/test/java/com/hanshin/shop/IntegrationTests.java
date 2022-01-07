@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional(readOnly = true)
 public abstract class IntegrationTests {
 
     @Autowired

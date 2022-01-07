@@ -8,16 +8,17 @@ import com.hanshin.shop.service.UserService;
 import com.hanshin.shop.vo.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import javax.servlet.http.Cookie;
 
-import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -131,7 +132,7 @@ public class UserControllerTest extends IntegrationTests {
                         .content(objectMapper.writeValueAsString(userInfo))
                         .cookie(cookie)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(1)))
+                .andExpect((ResultMatcher) jsonPath("$", ArgumentMatchers.eq(1)))
                 .andDo(print());
     }
 }

@@ -29,13 +29,10 @@ public class CartService {
     @Transactional
     public void add(CartVO cartVO) {
         final CartVO existCartVO = isExistCartOne(cartVO.getGoodsId(), cartVO.getUserId());
-        log.info("#existVO {}", existCartVO);
         if (Objects.isNull(existCartVO)) {
-            log.info("cartVO {}", cartVO);
             cartMapper.save(cartVO);
             return ;
         }
-        log.info("existVO {}", existCartVO);
         cartMapper.update(cartVO.getAmount(), existCartVO.getId());
     }
 
@@ -51,7 +48,6 @@ public class CartService {
 
     public CartVO isExistCartOne(Long goodsId, Long userId) {
         CartVO existCartOne = cartMapper.isExistCartOne(goodsId, userId);
-        log.info("# existCartOne : {}", existCartOne);
         return existCartOne;
     }
 

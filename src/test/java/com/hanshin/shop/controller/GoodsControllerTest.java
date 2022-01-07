@@ -8,19 +8,20 @@ import com.hanshin.shop.vo.goods.GoodsAttachVO;
 import com.hanshin.shop.vo.goods.GoodsDto;
 import com.hanshin.shop.vo.paging.Criteria;
 import org.assertj.core.api.Assertions;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class GoodsControllerTest extends IntegrationTests {
@@ -77,7 +78,7 @@ class GoodsControllerTest extends IntegrationTests {
     void recommend() throws Exception {
         mvc.perform(get("/api/recommend"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", Matchers.equalTo(2)));
+                .andExpect((ResultMatcher) jsonPath("$.length()", ArgumentMatchers.eq(2)));
     }
 
     @Test
@@ -85,7 +86,7 @@ class GoodsControllerTest extends IntegrationTests {
     void categories() throws Exception {
         mvc.perform(get("/api/categories"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", Matchers.equalTo(2)));
+                .andExpect((ResultMatcher) jsonPath("$.length()", ArgumentMatchers.eq(2)));
     }
 
     @Test
@@ -93,6 +94,6 @@ class GoodsControllerTest extends IntegrationTests {
     void categories_by_id() throws Exception {
         mvc.perform(get("/api/category/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name", Matchers.equalTo("파프리카")));
+                .andExpect((ResultMatcher) jsonPath("$[0].name", ArgumentMatchers.eq("파프리카")));
     }
 }

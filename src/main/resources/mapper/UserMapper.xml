@@ -20,7 +20,7 @@
         <result property="role" column="role" />
     </resultMap>
 
-    <select id="findByEmail" resultMap="userMap">
+    <select id="findByEmail" resultType="com.hanshin.shop.vo.user.User">
         select id, account, name, password, tel, address, u.email, birth, r.role
         from user u left join user_role r on u.email = r.email
         where u.email = #{email}
