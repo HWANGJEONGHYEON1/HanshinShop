@@ -31,7 +31,6 @@ class CartServiceTest extends IntegrationTests {
     @Test
     @WithMockUser(username = "admin", roles = "MEMBER")
     @DisplayName("장바구니에 담긴 상품의 개수 조회")
-    @Order(2)
     void get_cart_of_number() {
         Assertions.assertThat(2).isEqualTo(cartService.numberOfCart(1L));
     }

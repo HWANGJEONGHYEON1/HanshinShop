@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 @AutoConfigureMockMvc
 public abstract class IntegrationTests {
 
