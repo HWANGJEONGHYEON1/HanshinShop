@@ -15,7 +15,7 @@ public interface CartMapper {
 
     List<CartVO> findAll(long userId);
 
-    int update(int amount, Long id);
+    int update(@Param("amount") int amount, @Param("id") Long id);
 
     int delete(Long id);
 
