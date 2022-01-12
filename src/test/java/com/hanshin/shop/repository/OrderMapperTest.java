@@ -60,6 +60,6 @@ public class OrderMapperTest extends IntegrationTests {
     void order_count() {
         List<OrderDetailDto> orderDetails = orderMapper.findOrderDetails(userId);
         log.info("# {}", orderDetails);
-        Assertions.assertThat(1).isEqualTo(orderMapper.orderCount(userId));
+        Assertions.assertThat(2).isEqualTo(orderMapper.orderCount(userId));
     }
 }
