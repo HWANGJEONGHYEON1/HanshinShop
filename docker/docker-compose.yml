@@ -1,0 +1,28 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.5.52
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    env_file: .env
+    environment:
+      TZ: Asia/Seoul
+    networks:
+      - backend
+    restart: always
+  redis-cluster:
+    image: redis:5.0.8
+    volumes:
+      - ./redis:/redis
+    environment:
+      - REQUIREPASS=kurly
+    ports:
+      - "6376-6378:6376-6378"
+    entrypoint: /redis/docker-entrypoint.sh
+
+networks:
+  backend:
