@@ -56,6 +56,8 @@ public class UserServiceTest {
                 .userRoles(Collections.singletonList(userRole))
                 .build();
         return mockUserDto;
+
+
     }
 
     @Test
