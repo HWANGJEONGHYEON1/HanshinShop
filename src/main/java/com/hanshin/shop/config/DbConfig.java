@@ -24,6 +24,7 @@ public class DbConfig {
                 .getResources("classpath:mapper/*Mapper.xml");
         sqlSessionFactoryBean.setMapperLocations(arrResource);
         sqlSessionFactoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
+        sqlSessionFactoryBean.setTypeHandlers(new RoleTypeHandler());
         return sqlSessionFactoryBean.getObject();
     }
 

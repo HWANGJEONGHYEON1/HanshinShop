@@ -31,7 +31,7 @@ import java.util.UUID;
 @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class UploadController {
 
-    private static final String uploadFolder = "/Users/hwangjeonghyeon/IdeaProjects/HanshinShop/src/main/resources/static/img/";
+    private static final String uploadFolder = "classpath:/static/img/";
 
     @PostMapping("/deleteFile")
     public ResponseEntity<Void> deleteFile(String fileName) throws UnsupportedEncodingException {

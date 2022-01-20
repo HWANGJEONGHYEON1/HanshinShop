@@ -52,6 +52,6 @@ public class JwtFilter extends GenericFilterBean {
                 .filter(name -> name.getName().equals(AUTHORIZATION_HEADER))
                 .map(Cookie::getValue)
                 .findFirst()
-                .orElseThrow(null);
+                .orElse(null);
     }
 }
