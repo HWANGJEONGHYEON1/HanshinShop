@@ -38,7 +38,6 @@ public class CacheConfig {
         RedisCacheConfiguration redisConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
-                .prefixKeysWith(CACHE_PREFIX)
                 .entryTtl(Duration.ofSeconds(EXPIRE_SECONDS)); //TTL 적용도 가능하다.
 
         RedisCacheManager redisCacheManager = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory) //Connect 적용하고

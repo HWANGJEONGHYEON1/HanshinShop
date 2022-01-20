@@ -45,7 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/js/**",
                     "/favicon.ico",
                     "/img/**",
-                    "/resources/**"
+                    "/resources/**",
+                    "/error",
+                    "/",
+                    "/api/main",
+                    "/api/recommend",
+                    "/api/categories",
+                    "/api/authenticate"
             );
 ////        web.ignoring().antMatchers("/resources/**").anyRequest();
     }
@@ -68,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/resources/**").permitAll()
-            .antMatchers("/api/*","/", "/login", "/signup", "/goods/**").permitAll()
+            .antMatchers("/api/**", "/login", "/signup", "/goods/**").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/cart/count/*").hasAnyAuthority(RoleType.ROLE_ADMIN.name())
             .anyRequest().authenticated()

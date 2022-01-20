@@ -11,18 +11,17 @@ services:
     env_file: .env
     environment:
       TZ: Asia/Seoul
-    networks:
-      - backend
-    restart: always
+
   redis-cluster:
     image: redis:5.0.8
     volumes:
       - ./redis:/redis
     environment:
-      - REQUIREPASS=kurly
+      - START_PORT=30001
+      - END_PORT=30003
+      - TIMEOUT=1000
+      - REPLICAS=0
+      - PASSWORD=1234
     ports:
-      - "6376-6378:6376-6378"
+      - "30001-30003:30001-30003"
     entrypoint: /redis/docker-entrypoint.sh
-
-networks:
-  backend:
